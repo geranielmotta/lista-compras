@@ -1,0 +1,12 @@
+{
+  "name": "Documentation of REST Services",
+  "version": "1.0.0",
+  "description": "Documentação dos serviços REST desenvolvidos para o projeto Collect Data",
+  "title": "Documentation",
+  "url" : "http://collectdata.ensoag.com",
+  "sampleUrl": "http://collectdata.ensoag.com",
+  "template": {
+  	"withCompare": true,
+  	"withGenerator": true
+  }
+}
