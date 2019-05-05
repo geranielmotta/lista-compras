@@ -1,10 +1,10 @@
 {
   "name": "Documentation of REST Services",
   "version": "1.0.0",
-  "description": "Documentação dos serviços REST desenvolvidos para o projeto Collect Data",
+  "description": "Documentação dos serviços REST desenvolvidos para o projeto lista de compras",
   "title": "Documentation",
-  "url" : "http://collectdata.ensoag.com",
-  "sampleUrl": "http://collectdata.ensoag.com",
+  "url" : "http://localhost/lista-caompras/",
+  "sampleUrl": "http://localhost/lista-caompras/",
   "template": {
   	"withCompare": true,
   	"withGenerator": true

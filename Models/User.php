@@ -2,7 +2,7 @@
 
 class User {
 /**
- * @api {POST} /:language/user newUser
+ * @api {POST} /user newUser
  * @apiVersion 1.0.0
  * @apiName newUser
  * @apiGroup User
@@ -35,7 +35,7 @@ class User {
  * @apiSampleRequest off
  * 
  */
-    public function newUser($language) {
+    public function newUser() {
 
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
@@ -60,7 +60,7 @@ class User {
         }
     }
 /**
- * @api {PUT} /:language/user/:id updateUser
+ * @api {PUT} /user/:id updateUser
  * @apiVersion 1.0.0
  * @apiName updateUser
  * @apiGroup User
@@ -95,7 +95,7 @@ class User {
  * 
  */
 
-    public function updateUser($language, $id) {
+    public function updateUser($id) {
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
         $sql = "UPDATE user SET username=:username, password=:password, name=:name, phone=:phone, email=:email,access_levels=:access_levels, organization=:organization WHERE id=:id";
@@ -118,7 +118,7 @@ class User {
         }
     }
 /**
- * @api {DELETE} /:language/user/:id deleteUser
+ * @api {DELETE} /user/:id deleteUser
  * @apiVersion 1.0.0
  * @apiName deleteUser
  * @apiGroup User
@@ -140,7 +140,7 @@ class User {
  * @apiSampleRequest off
  * 
  */
-    public function deleteUser($language, $id) {
+    public function deleteUser($id) {
 
         $sql = "DELETE FROM user WHERE id=:id";
         try {
@@ -154,7 +154,7 @@ class User {
         }
     }
 /**
- * @api {GET} /:language/user/:id getOneUser
+ * @api {GET} /user/:id getOneUser
  * @apiVersion 1.0.0
  * @apiName getOneUser
  * @apiGroup User
@@ -181,8 +181,8 @@ class User {
  * @apiSampleRequest off
  * 
  */
-    public function getOneUser($language, $id) {
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description_$language AS access_levels, o.description AS organization,o.id as organization_id FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels WHERE u.id=:id";
+    public function getOneUser($id) {
+        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels, o.description AS organization,o.id as organization_id FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels WHERE u.id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -196,7 +196,7 @@ class User {
         }
     }
 /**
- * @api {GET} /:language/user/ getAllUser
+ * @api {GET} /user/ getAllUser
  * @apiVersion 1.0.0
  * @apiName getAllUser
  * @apiGroup User
@@ -222,8 +222,8 @@ class User {
  * @apiSampleRequest off
  * 
  */
-    public function getAllUser($language) {
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description_$language AS access_levels, o.description AS organization FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels ORDER BY u.name DESC";
+    public function getAllUser() {
+        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels, o.description AS organization FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels ORDER BY u.name DESC";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
@@ -234,98 +234,6 @@ class User {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
-/**
- * @api {GET} /:language/user/organization/:organization getAllUserOfOrganization
- * @apiVersion 1.0.0
- * @apiName getAllUserOfOrganization
- * @apiGroup User
- * @apiPermission none
- *
- * @apiDescription Esta função seleciona todos os usuarios de uma determinada organização
- * 
- * @apiParam {string} language Variável referente a chave do idioma.
- * @apiParam {int} organization Id da organização.
- * 
- *
- * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
- * @apiSuccess {object[] } user Retorna um objeto com todos os valores
- * 
- * @apiError {boolean}type  false caso ocorra um erro.
- * @apiError {string} data  Mensagem de erro.
- * 
- * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"id":"1","username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC"}}
- * @apiErrorExample {json} Error-Response:
- *      
- *     {"type": false,"data": "error"}
- * 
- * @apiSampleRequest off
- * 
- */
-    public function getAllUserOfOrganization($language, $organization) {
-
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description_$language AS access_levels, o.description AS organization
-                FROM user u
-                INNER JOIN access_levels al ON al.id = u.access_levels
-                INNER JOIN organization o ON o.id = u.organization
-                WHERE o.id = :organization 
-                ORDER BY u.id;";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(":organization", $organization);
-            $stmt->execute();
-            $user = $stmt->fetchAll(PDO::FETCH_OBJ);
-            $db = null;
-            echo '{"type":true, "user":' . json_encode($user) . '}';
-        } catch (PDOException $e) {
-            echo '{"type":false, "data":"' . $e->getMessage() . '"}';
-        }
-    }
-/**
- * @api {GET} /:language/user/field/:field getAllUserOfField
- * @apiVersion 1.0.0
- * @apiName getAllUserOfField
- * @apiGroup User
- * @apiPermission none
- *
- * @apiDescription Esta função seleciona os dados do usuario de uma determinada parcela
- * 
- * @apiParam {string} language Variável referente a chave do idioma.
- * @apiParam {int} field Id da parcela.
- * 
- *
- * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
- * @apiSuccess {object[] } user Retorna um objeto com todos os valores
- * 
- * @apiError {boolean}type  false caso ocorra um erro.
- * @apiError {string} data  Mensagem de erro.
- * 
- * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"id":"1","username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC"}}
- * @apiErrorExample {json} Error-Response:
- *      
- *     {"type": false,"data": "error"}
- * 
- * @apiSampleRequest off
- * 
- */
-    public function getAllUserOfField($language,$field) {
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email FROM user u INNER JOIN user_field uf ON u.id = uf.user WHERE uf.field=:field ORDER BY u.name;";
-
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(":field", $field);
-            $stmt->execute();
-            $user = $stmt->fetchAll(PDO::FETCH_OBJ);
-            $db = null;
-            echo '{"type":true, "user": ' . json_encode($user) . '}';
-        } catch (PDOException $e) {
-            echo '{"type":false, "data": "'.$e->getMessage().'"}';
-        }
-    }
-    
 }
 
 ?>

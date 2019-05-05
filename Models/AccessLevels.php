@@ -3,7 +3,7 @@
 class AccessLevels{
 
 /**
- * @api {GET} /:language/accesslevels/:id getOneAccessLevels
+ * @api {GET} /accesslevels/:id getOneAccessLevels
  * @apiVersion 1.0.0
  * @apiName getOneAccessLevels
  * @apiGroup Access Levels
@@ -31,8 +31,8 @@ class AccessLevels{
  * 
  */    
     
-    public function getOneAccessLevels($language,$id) {
-        $sql = "SELECT id,description_$language AS description, code FROM access_levels WHERE id=:id";
+    public function getOneAccessLevels(,$id) {
+        $sql = "SELECT id, description, code FROM access_levels WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -46,7 +46,7 @@ class AccessLevels{
         }
     }
 /**
- * @api {GET} /:language/accesslevels/:id getAllAccessLevels
+ * @api {GET} /accesslevels/:id getAllAccessLevels
  * @apiVersion 1.0.0
  * @apiName getAllAccessLevels
  * @apiGroup Access Levels
@@ -73,8 +73,8 @@ class AccessLevels{
  * @apiSampleRequest off
  * 
  */ 
-    public function getAllAccessLevels($language) {
-        $sql = "SELECT id,description_$language AS description, code FROM access_levels";
+    public function getAllAccessLevels() {
+        $sql = "SELECT id,description, code FROM access_levels";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
@@ -87,7 +87,7 @@ class AccessLevels{
     }
     
 /**
- * @api {GET} /:language/accesslevelsnotroot getAllAccessLevelsNotRoot
+ * @api {GET} /accesslevelsnotroot getAllAccessLevelsNotRoot
  * @apiVersion 1.0.0
  * @apiName getAllAccessLevelsNotRoot
  * @apiGroup Access Levels
@@ -114,8 +114,8 @@ class AccessLevels{
  * 
  */ 
     
-    public function getAllAccessLevelsNotRoot($language) {
-        $sql = "SELECT id,description_$language AS description,code FROM access_levels WHERE id <> 1";
+    public function getAllAccessLevelsNotRoot() {
+        $sql = "SELECT id,description,code FROM access_levels WHERE id <> 1";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
