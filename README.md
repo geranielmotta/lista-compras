@@ -2,11 +2,11 @@
 Api para trabalho de engenharia de software
 
 <h3>Ambiente de trabalho:</h3>
-* VsCode(IDE) - https://code.visualstudio.com/
-* xampp - https://www.apachefriends.org/index.html
-* framework - Slim http://www.slimframework.com/2015/03/01/version-260.html (versão desatualizada)
-* npm - https://www.npmjs.com/get-npm
-* APIDoc - http://apidocjs.com/
+<ul> VsCode(IDE) - https://code.visualstudio.com/</ul>
+<ul> xampp - https://www.apachefriends.org/index.html</ul>
+<ul> framework - Slim http://www.slimframework.com/2015/03/01/version-260.html (versão desatualizada)</ul>
+<ul> npm - https://www.npmjs.com/get-npm</ul>
+<ul> APIDoc - http://apidocjs.com/</ul>
 
 
 <h3>Como configurar no windows 10 :</h3>
