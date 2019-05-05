@@ -209,7 +209,7 @@ class User {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest off
+ * @apiSampleRequest http://api.lista-compras.com/user
  * 
  */
     public function getAllUser() {
