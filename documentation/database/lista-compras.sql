@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05-Maio-2019 às 20:57
+-- Generation Time: 05-Maio-2019 às 22:21
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.4
 
@@ -47,6 +47,19 @@ INSERT INTO `access_levels` (`id`, `description`, `code`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `list`
+--
+
+CREATE TABLE `list` (
+  `id` int(11) NOT NULL,
+  `spending` float DEFAULT NULL,
+  `date` varchar(45) DEFAULT NULL,
+  `user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `user`
 --
 
@@ -79,11 +92,18 @@ ALTER TABLE `access_levels`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `list`
+--
+ALTER TABLE `list`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_list_user_idx` (`user`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `access_levels` (`access_levels`);
+  ADD KEY `fk_user_access_levels1_idx` (`access_levels`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -96,10 +116,32 @@ ALTER TABLE `access_levels`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `list`
+--
+ALTER TABLE `list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `list`
+--
+ALTER TABLE `list`
+  ADD CONSTRAINT `fk_list_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limitadores para a tabela `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `fk_user_access_levels1` FOREIGN KEY (`access_levels`) REFERENCES `access_levels` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
