@@ -82,7 +82,7 @@ function login(){
     $request = \Slim\Slim::getInstance()->request();
 	$login = json_decode($request->getBody());
         
-        $sql = "SELECT u.id, u.name, u.token, al.code AS access_levels, o.id AS organization FROM user u INNER JOIN access_levels al ON al.id=u.access_levels INNER JOIN organization o ON u.organization=o.id WHERE u.email = :email AND u.password = :password";	
+        $sql = "SELECT u.id, u.name, u.token, al.code AS access_levels FROM user u INNER JOIN access_levels al ON al.id=u.access_levels  WHERE u.email = :email AND u.password = :password";	
         
         if((isset($login->password)) && (isset($login->email))){
             
