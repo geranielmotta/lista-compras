@@ -20,13 +20,13 @@ caso não tenha o git instalado baixe neste endereço:
 
 https://git-scm.com/downloads
 
-em  C:\xampp\htdocs\lista-compras\documentation\database  abra e copie as informações do arquivo SQL lista.sql
+em  C:\xampp\htdocs\lista-compras\documentation\database  abra e copie as informações do arquivo SQL lista-compras.sql
 
 em seu navegador padrão digite:
 
 ``` http://localhost/phpmyadmin/ ```
 
-Click em SQL e cole as informações do arquivo lista.sql e de um executar.
+Click em SQL e cole as informações do arquivo lista-compras.sql e de um executar.
 
 <h3>Siga os passos abaixo para criar um host virtual:</h3>
 
