@@ -66,7 +66,7 @@ $app->get('user', array('User','getAllUser'));
  * @apiError {string} data Mensagem de erro. 
  * @apiSuccessExample {json} Success-Response:
  *      OK
- *     {"type":true,"data":"name","id":"id","token":"token","access_levels":"access_levels","organization":"organization"}
+ *     {"type":true,"data":"name","id":"id","token":"token","access_levels":"access_levels"}
  * 
  * @apiErrorExample {json} Error-Response:
  *      Not Found

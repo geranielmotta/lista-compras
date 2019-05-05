@@ -11,7 +11,6 @@ class AccessLevels{
  *
  * @apiDescription Esta função consulta um nivel de acesso de um usuário.
  * 
- * @apiParam {string} language Variavel referente a chave do idioma.
  * @apiParam {int} id Id do usuário.
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou.
@@ -31,7 +30,7 @@ class AccessLevels{
  * 
  */    
     
-    public function getOneAccessLevels(,$id) {
+    public function getOneAccessLevels($id) {
         $sql = "SELECT id, description, code FROM access_levels WHERE id=:id";
         try {
             $db = getConnection();
@@ -54,7 +53,6 @@ class AccessLevels{
  *
  * @apiDescription Esta função consulta todos os niveis de acesso.
  * 
- * @apiParam {string} language Variavel referente a chave do idioma.
  * @apiParam {int} id Id do usuário.
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou.
@@ -95,7 +93,6 @@ class AccessLevels{
  *
  * @apiDescription Esta função consulta todos os niveis de acesso que não são ROOT.
  * 
- * @apiParam {string} language Variavel referente a chave do idioma.
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou.
  * @apiSuccess {object[] } access_levels Retorna objeto com o valor selecionado.

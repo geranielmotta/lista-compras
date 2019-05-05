@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Documentação dos serviços REST desenvolvidos para o projeto lista de compras",
   "title": "Documentation",
-  "url" : "http://localhost/lista-caompras/api/",
-  "sampleUrl": "http://localhost/lista-caompras/api/",
+  "url" : "http://api.lista-compras/api",
+  "sampleUrl": "http://api.lista-compras/api",
   "template": {
   	"withCompare": true,
   	"withGenerator": true

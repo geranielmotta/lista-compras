@@ -10,14 +10,12 @@ class User {
  *
  * @apiDescription Esta função faz o cadastramento de um registro
  * 
- * @apiParam {string} language Variável referente a chave do idioma.
  * @apiParam {string} username Nome do usuário
  * @apiParam {string} password Senha do usuário
  * @apiParam {string} name Name completo do usuário
  * @apiParam {string} phone Telefone do usuário
  * @apiParam {string} email Email do usuário
  * @apiParam {string} access_levels Nivel de acesso do usuário
- * @apiParam {string} organization Organização do usuário
  * 
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se cadastrou
@@ -27,19 +25,19 @@ class User {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC","id":"1"}}
+ *   {"type": true,"user": {"username":"geranielmotta","name":"Geraniel Motta","phone":"+55541554448","email":"geraniel.motta@gmail.com","access_levels":"Adminstrador"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest off
+ * @apiSampleRequest http://api.lista-compras/api/user
  * 
  */
     public function newUser() {
 
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
-        $sql = "INSERT INTO user(username, password, name, phone, email, access_levels, organization) VALUES (:username, :password, :name, :phone, :email, :access_levels, :organization)";
+        $sql = "INSERT INTO user(username, password, name, phone, email, access_levels) VALUES (:username, :password, :name, :phone, :email, :access_levels)";
 
         try {
             $db = getConnection();
@@ -50,7 +48,6 @@ class User {
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);
             $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_STR);
-            $stmt->bindParam(":organization", $user->organization, PDO::PARAM_STR);
             $stmt->execute();
             $user->id = $db->lastInsertId();
             $db = null;
@@ -68,14 +65,12 @@ class User {
  *
  * @apiDescription Esta função atualiza um registro
  * 
- * @apiParam {string} language Variável referente a chave do idioma.
  * @apiParam {string} username Nome do usuário
  * @apiParam {string} password Senha do usuário
  * @apiParam {string} name Name completo do usuário
  * @apiParam {string} phone Telefone do usuário
  * @apiParam {string} email Email do usuário
  * @apiParam {string} access_levels Nivel de acesso do usuário
- * @apiParam {string} organization Organização do usuário
  * @apiParam {int} id Id a ser atualizado
  * 
  *
@@ -86,7 +81,7 @@ class User {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"id":"1","username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC"}}
+ *   {"type": true,"user": {"id":"1","username":"geranielmotta","name":"Geraniel Motta","phone":"+55541554448","email":"geraniel.motta@gmail.com","access_levels":"Adminstrador"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -98,7 +93,7 @@ class User {
     public function updateUser($id) {
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
-        $sql = "UPDATE user SET username=:username, password=:password, name=:name, phone=:phone, email=:email,access_levels=:access_levels, organization=:organization WHERE id=:id";
+        $sql = "UPDATE user SET username=:username, password=:password, name=:name, phone=:phone, email=:email,access_levels=:access_levels WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -108,7 +103,6 @@ class User {
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);
             $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_STR);
-            $stmt->bindParam(":organization", $user->organization, PDO::PARAM_STR);
             $stmt->bindParam(":id", $id, PDO::PARAM_INT);
             $stmt->execute();
             $db = null;
@@ -122,11 +116,10 @@ class User {
  * @apiVersion 1.0.0
  * @apiName deleteUser
  * @apiGroup User
- * @apiPermission none
+ * @apiPermission admin
  *
  * @apiDescription Esta função deleta um registro
  * 
- * @apiParam {string} language Variável referente a chave do idioma.
  * @apiParam {int} id Id a ser deletado
  * 
  *
@@ -162,7 +155,6 @@ class User {
  *
  * @apiDescription Esta função seleciona um registro
  * 
- * @apiParam {string} language Variável referente a chave do idioma.
  * @apiParam {int} id Id a ser selecionado
  * 
  *
@@ -173,7 +165,7 @@ class User {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"id":"1","username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC"}}
+ *   {"type": true,"user": {"id":"1","username":"geranielmotta","name":"Geraniel Motta","phone":"+55541554448","email":"geraniel.motta@gmail.com","access_levels":"Adminstrador"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -182,7 +174,7 @@ class User {
  * 
  */
     public function getOneUser($id) {
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels, o.description AS organization,o.id as organization_id FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels WHERE u.id=:id";
+        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels FROM user u INNER JOIN access_levels al ON al.id = u.access_levels WHERE u.id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -204,8 +196,6 @@ class User {
  *
  * @apiDescription Esta função seleciona todos os registro
  * 
- * @apiParam {string} language Variável referente a chave do idioma.
- * 
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
  * @apiSuccess {object[] } user Retorna um objeto com todos os valores
@@ -214,7 +204,7 @@ class User {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"user": {"id":"1","username":"dperondi","name":"Daniel Perondi","phone":"+555496416090","email":"daniel@ensoag.com","access_levels":"Adminstrador","organization":"Fundação ABC"}}
+ *   {"type": true,"user": {"id":"1","username":"geranielmotta","name":"Geraniel Motta","phone":"+55541554448","email":"geraniel.motta@gmail.com","access_levels":"Adminstrador"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -223,7 +213,7 @@ class User {
  * 
  */
     public function getAllUser() {
-        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels, o.description AS organization FROM user u INNER JOIN organization o ON o.id = u.organization INNER JOIN access_levels al ON al.id = u.access_levels ORDER BY u.name DESC";
+        $sql = "SELECT u.id, u.username, u.name, u.phone, u.email, al.description AS access_levels FROM user u  INNER JOIN access_levels al ON al.id = u.access_levels ORDER BY u.name DESC";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
