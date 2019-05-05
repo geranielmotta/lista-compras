@@ -38,12 +38,12 @@ Click em SQL e cole as informações do arquivo lista.sql e de um executar.
 
 <blockquote>
 <VirtualHost *:80>
-    ##ServerAdmin geranielmotta@gmail.com
-    ##DocumentRoot "C:/xampp/htdocs/lista-compras/api"
-    ##ServerName api.lista-compras.com
-    ##ServerAlias www.api.lista-compras.com
-    ##ErrorLog "logs/api.lista-compras.log"
-    ##CustomLog "logs/api.lista-compras.log" common
+   ServerAdmin geranielmotta@gmail.com
+    DocumentRoot "C:/xampp/htdocs/lista-compras/api"
+    ServerName api.lista-compras.com
+    ServerAlias www.api.lista-compras.com
+    ErrorLog "logs/api.lista-compras.log"
+    CustomLog "logs/api.lista-compras.log" common
 </VirtualHost>
  </blockquote>
  
