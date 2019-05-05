@@ -195,7 +195,7 @@ class User {
  * @apiPermission none
  *
  * @apiDescription Esta função seleciona todos os registro
- * 
+ * @apiHeader {String} Authorization='bearer f7a18c7871d160d4202b1878c73eefc9'
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
  * @apiSuccess {object[] } user Retorna um objeto com todos os valores

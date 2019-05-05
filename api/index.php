@@ -35,17 +35,17 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 $app->post('/login', 'login');
 
 //Access Levels
-$app->get('accesslevels/:id', array('AccessLevels','getOneAccessLevels'));
-$app->get('accesslevels',     array('AccessLevels','getAllAccessLevels'));
-$app->get('accesslevelsnotroot',     array('AccessLevels','getAllAccessLevelsNotRoot'));
+$app->get('/accesslevels/:id', array('AccessLevels','getOneAccessLevels'));
+$app->get('/accesslevels',     array('AccessLevels','getAllAccessLevels'));
+$app->get('/accesslevelsnotroot',     array('AccessLevels','getAllAccessLevelsNotRoot'));
 
 
 //User
-$app->post('user', array('User','newUser'));
-$app->put('user/:id', array('User','updateUser'));
-$app->delete('user/:id', array('User','deleteUser'));
-$app->get('user/:id', array('User','getOneUser'));
-$app->get('user', array('User','getAllUser'));
+$app->post('/user', array('User','newUser'));
+$app->put('/user/:id', array('User','updateUser'));
+$app->delete('/user/:id', array('User','deleteUser'));
+$app->get('/user/:id', array('User','getOneUser'));
+$app->get('/user', array('User','getAllUser'));
 
 
 /**
@@ -131,6 +131,8 @@ function validateToken(){
         $token = explode(" ", $head);
 
         $token = $token[1];
+
+        //print_r($head);
 
         $sql = "SELECT name, token FROM user WHERE token = :token;";    
 
