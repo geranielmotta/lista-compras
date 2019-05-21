@@ -448,6 +448,25 @@ define({ "api": [
         }
       ]
     },
+    "sampleRequest": [
+      {
+        "url": "http://api.lista-compras.com/user"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": true,
+            "field": "Authorization",
+            "defaultValue": "bearer",
+            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+          }
+        ]
+      }
+    },
     "filename": "api/Models/User.php",
     "groupTitle": "User"
   },
