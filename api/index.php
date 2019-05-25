@@ -5,6 +5,7 @@ require 'CorsSlim/CorsSlim.php';
 
 require 'Models/AccessLevels.php';
 require 'Models/User.php';
+require 'Models/ShoppingList.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -47,7 +48,11 @@ $app->delete('/user/:id', array('User','deleteUser'));
 $app->get('/user/:id', array('User','getOneUser'));
 $app->get('/user', array('User','getAllUser'));
 
-
+//List
+$app->post('/shoppinglist', array('ShoppingList','newShoppingList'));
+$app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
+$app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
+$app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingList'));
 /**
  * @api {POST} /login 
  * @apiVersion 1.0.0
