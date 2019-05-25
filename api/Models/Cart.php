@@ -1,59 +1,59 @@
 <?php
 
-class ShoppingList {
+class Cart {
 /**
- * @api {POST} /shoppinglist newShoppingList
+ * @api {POST} /List newCart
  * @apiVersion 1.0.0
- * @apiName newShoppingList
- * @apiGroup ShoppingList
+ * @apiName newCart
+ * @apiGroup Cart
  * @apiPermission none
  *
  * @apiDescription Esta função faz o cadastramento de um registro
  * 
- * @apiParam {date} data da criação da lista
- * @apiParam {int} user Id do usuário
+ * @apiParam {products} data da criação da lista
+ * @apiParam {int} shoppinglist Id do usuário
  * 
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se cadastrou
- * @apiSuccess {object[] }  Retorna um objeto com os valores cadastrados
+ * @apiSuccess {object[] } Object Retorna um objeto com os valores cadastrados
  * 
  * @apiError {boolean}type  false caso ocorra um erro.
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"shoppingList": {"date":"20/05/2019","user":"1"}}
+ *   {"type": true,"Cart": {"product":"1","shooplist":"1"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras/api/shoppinglist
+ * @apiSampleRequest http://api.lista-compras/api/Cart
  * 
  */
-    public function newShoppingList() {
+    public function newCart() {
 
         $request = \Slim\Slim::getInstance()->request();
-        $List = json_decode($request->getBody());
-        $sql = "INSERT INTO shoppinglist( date, user) VALUES (:date, :user)";
+        $cart = json_decode($request->getBody());
+        $sql = "INSERT INTO cart( products, shoppinglist) VALUES (:products, :shoppinglist)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":date",     $List->date,     PDO::PARAM_STR);
-            $stmt->bindParam(":user",     $List->user,     PDO::PARAM_STR);
+            $stmt->bindParam(":products",     $cart->products,     PDO::PARAM_STR);
+            $stmt->bindParam(":shoppinglist",     $cart->shoppinglist,     PDO::PARAM_STR);
             $stmt->execute();
-            $List->id = $db->lastInsertId();
+            $cart->id = $db->lastInsertId();
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "Cart":' . json_encode($cart) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
 
 /**
- * @api {DELETE} /shoppinglist/:id deleteShoppingList
+ * @api {DELETE} /List/:id deleteCart
  * @apiVersion 1.0.0
- * @apiName deleteShoppingList
- * @apiGroup ShoppingList
+ * @apiName deleteCart
+ * @apiGroup Cart
  * @apiPermission admin
  *
  * @apiDescription Esta função deleta um registro
@@ -71,9 +71,9 @@ class ShoppingList {
  * @apiSampleRequest off
  * 
  */
-    public function deleteShoppingList($id) {
+    public function deleteCart($id) {
 
-        $sql = "DELETE FROM shoppinglist WHERE id=:id";
+        $sql = "DELETE FROM List WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -85,10 +85,10 @@ class ShoppingList {
         }
     }
 /**
- * @api {GET} /shoppinglist/:id getOneShoppingList
+ * @api {GET} /List/:id getOneCart
  * @apiVersion 1.0.0
- * @apiName getOneShoppingList
- * @apiGroup ShoppingList
+ * @apiName getOneCart
+ * @apiGroup Cart
  * @apiPermission none
  *
  * @apiDescription Esta função seleciona um registro
@@ -103,7 +103,7 @@ class ShoppingList {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"shoppingList": {"id":"1","spending":"200","amount":"3","user":"1","date":"20/05/2019"}}
+ *   {"type": true,"Cart": {"id":"1","spending":"200","amount":"3","shoppinglist":"1","products":"20/05/2019"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -111,30 +111,30 @@ class ShoppingList {
  * @apiSampleRequest off
  * 
  */
-    public function getOneShoppingList($id) {
-        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
-                    FROM shoppinglist l 
-                        INNER JOIN cart c ON c.shoppinglist = l.id
+    public function getOneCart($id) {
+        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.shoppinglist, l.products
+                    FROM List l 
+                        INNER JOIN cart c ON c.list = l.id
                         INNER JOIN products p ON p.id = c.products
-                        INNER JOIN user u ON u.id = l.user    
+                        INNER JOIN shoppinglist u ON u.id = l.shoppinglist    
                     WHERE l.id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
-            $List = $stmt->fetchObject();
+            $cart = $stmt->fetchObject();
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "Cart":' . json_encode($cart) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
 /**
- * @api {GET} /shoppinglist/ getAllShoppingList
+ * @api {GET} /cart/user/:user getAllProductsFromUserCart
  * @apiVersion 1.0.0
- * @apiName getAllShoppingList
- * @apiGroup ShoppingList
+ * @apiName getAllCart
+ * @apiGroup Cart
  * @apiPermission none
  *
  * @apiDescription Esta função seleciona todos os registro
@@ -146,30 +146,30 @@ class ShoppingList {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"ShoppingList": {"id":"1","spending":"200","amount":"3","user":"1","date":"20/05/2019"}}
+ *   {"type": true,"Cart": {"id":"1","spending":"200","amount":"3","shoppinglist":"1","products":"20/05/2019"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/shoppinglist  
+ * @apiSampleRequest http://api.lista-compras.com/Cart  
  * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
  * 
  */
-    public function getAllShoppingList($user) {
-        $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
-                    FROM shoppinglist l 
-                    INNER JOIN cart c ON c.shoppinglist = l.id
+    public function getAllCart($shoppinglist) {
+        $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.shoppinglist, l.products
+                    FROM cart c
+                    INNER JOIN list c ON c.list = l.id
                     INNER JOIN products p ON p.id = c.products
-                    INNER JOIN user u ON u.id = l.user    
-                    WHERE u.id=:user ORDER BY l.id DESC";
+                    INNER JOIN shoppinglist u ON u.id = l.shoppinglist    
+                    WHERE u.id=:shoppinglist ORDER BY l.id DESC";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":user", $user);
+            $stmt->bindParam(":shoppinglist", $shoppinglist);
             $stmt->execute();
-            $List = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $cart = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "Cart":' . json_encode($cart) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
