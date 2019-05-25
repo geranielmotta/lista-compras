@@ -10,12 +10,8 @@ class List {
  *
  * @apiDescription Esta função faz o cadastramento de um registro
  * 
- * @apiParam {string} Listname Nome do usuário
- * @apiParam {string} spending Soma dos valores dos produtos na lista
- * @apiParam {string} name Name completo do usuário
- * @apiParam {string} phone Telefone do usuário
- * @apiParam {string} email Email do usuário
- * @apiParam {string} access_levels Nivel de acesso do usuário
+ * @apiParam {date} data da criação da lista
+ * @apiParam {int} user Id do usuário
  * 
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se cadastrou
@@ -25,7 +21,7 @@ class List {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"List": {"spending":"200,00","user":"1","cart":"1","date":"20/05/2019"}}
+ *   {"type": true,"List": {"date":"20/05/2019","user":"1"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -37,15 +33,13 @@ class List {
 
         $request = \Slim\Slim::getInstance()->request();
         $List = json_decode($request->getBody());
-        $sql = "INSERT INTO List(spending, user, cart, date) VALUES (:spending, :user, :cart, :date)";
+        $sql = "INSERT INTO List( date, user) VALUES (:date, :user)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":spending", $List->spending, PDO::PARAM_STR);
-            $stmt->bindParam(":user",     $List->user,     PDO::PARAM_STR);
-            $stmt->bindParam(":cart",     $List->cart,     PDO::PARAM_STR);
             $stmt->bindParam(":date",     $List->date,     PDO::PARAM_STR);
+            $stmt->bindParam(":user",     $List->user,     PDO::PARAM_STR);
             $stmt->execute();
             $List->id = $db->lastInsertId();
             $db = null;
@@ -118,9 +112,10 @@ class List {
  * 
  */
     public function getOneList($id) {
-        $sql = "SELECT l.spending, SUM(c.id) AS amount, l.user, l.date
+        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM List l 
                         INNER JOIN cart c ON c.list = l.id
+                        INNER JOIN products p ON p.id = c.products
                         INNER JOIN user u ON u.id = l.user    
                     WHERE l.id=:id";
         try {
@@ -160,15 +155,17 @@ class List {
  * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
  * 
  */
-    public function getAllList() {
-        $sql = "SELECT l.spending, SUM(c.id) AS amount, u.user, l.date 
+    public function getAllList($user) {
+        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM List l 
                     INNER JOIN cart c ON c.list = l.id
+                    INNER JOIN products p ON p.id = c.products
                     INNER JOIN user u ON u.id = l.user    
-                    WHERE l.id=:id ORDER BY l.id DESC";
+                    WHERE u.id=:user ORDER BY l.id DESC";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
+            $stmt->bindParam(":user", $user);
             $List = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
             echo '{"type":true, "List":' . json_encode($List) . '}';
