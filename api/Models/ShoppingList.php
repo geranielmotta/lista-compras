@@ -156,7 +156,7 @@ class ShoppingList {
  * 
  */
     public function getAllShoppingList($user) {
-        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
+        $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM List l 
                     INNER JOIN cart c ON c.list = l.id
                     INNER JOIN products p ON p.id = c.products
@@ -164,8 +164,9 @@ class ShoppingList {
                     WHERE u.id=:user ORDER BY l.id DESC";
         try {
             $db = getConnection();
-            $stmt = $db->query($sql);
+            $stmt = $db->prepare($sql);
             $stmt->bindParam(":user", $user);
+            $stmt->execute();
             $List = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
             echo '{"type":true, "List":' . json_encode($List) . '}';
@@ -174,5 +175,4 @@ class ShoppingList {
         }
     }
 }
-
 ?>
