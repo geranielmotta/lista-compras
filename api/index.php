@@ -6,6 +6,8 @@ require 'CorsSlim/CorsSlim.php';
 require 'Models/AccessLevels.php';
 require 'Models/User.php';
 require 'Models/ShoppingList.php';
+require 'Models/Category.php';
+require 'Models/Products.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -53,6 +55,21 @@ $app->post('/shoppinglist', array('ShoppingList','newShoppingList'));
 $app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
 $app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
 $app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingList'));
+
+//Category
+$app->post('/category', array('Category','newCategory'));
+$app->put('/category/:id', array('Category','updateCategory'));
+$app->delete('/category/:id', array('Category','deleteCategory'));
+$app->get('/category/:id', array('Category','getOneCategory'));
+$app->get('/category', array('Category','getAllCategory'));
+
+//Products
+$app->post('/products', array('Products','newProducts'));
+$app->put('/products/:id', array('Products','updateProducts'));
+$app->delete('/products/:id', array('Products','deleteProducts'));
+$app->get('/products/:id', array('Products','getOneProducts'));
+$app->get('/products', array('Products','getAllProducts'));
+
 /**
  * @api {POST} /login 
  * @apiVersion 1.0.0
