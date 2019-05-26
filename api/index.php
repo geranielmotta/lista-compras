@@ -109,11 +109,11 @@ function login(){
         if((isset($login->password)) && (isset($login->email))){
             
             try {
-
+                $senha = md5($login->password);
                 $db = getConnection();
                 $stmt = $db->prepare($sql); 
                 $stmt->bindParam(':email', $login->email, PDO::PARAM_STR);
-                $stmt->bindParam(':password', md5($login->password), PDO::PARAM_STR);
+                $stmt->bindParam(':password', $senha, PDO::PARAM_STR);
                 $stmt->execute();
                 $user = $stmt->fetch(PDO::FETCH_OBJ);
                 $db = null;
@@ -127,9 +127,9 @@ function login(){
                     $stmt->bindParam(':id', $user->id, PDO::PARAM_INT);
                     $stmt->execute();
                     $db = null;
-                    print('{"type":true,"data":"'.$user->name.'","id":"'.$user->id.'","token":"'.$token.'","access_levels":"'.$user->access_levels.'","organization":"'.$user->organization.'"}'); 
+                    echo '{"type":true,"data":"'.$user->name.'","id":"'.$user->id.'","token":"'.$token.'","access_levels":"'.$user->access_levels.'"}'; 
                 } else {
-                    print('{"type":false,"data":"Incorrect email/password"}');    
+                    echo '{"type":false,"data":"Incorrect email/password"}';    
                 }
 
             } catch(PDOException $e) {

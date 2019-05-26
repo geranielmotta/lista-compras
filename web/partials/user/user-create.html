@@ -1,0 +1,28 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#/web/user">Usuários</a>
+        </li>
+        <li>
+            <a href="#">Novo usuário</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading ">
+       Cadastrar novo usuário
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form role="userForm" name="userForm" class="form-horizontal" novalidate ng-submit="createUser()">
+                <div ng-include="'partials/user/_form.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

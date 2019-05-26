@@ -1,0 +1,49 @@
+<div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+      <label >Nome</label>
+      <input type="text" name="username"  class="form-control" ng-model="user.username" required>
+      <p ng-show="userForm.username.$invalid && !userForm.username.$pristine" class="help-block" translate="form.erro"></p>
+    </div>
+ 
+<div class="form-group" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine  }">
+      <label >Senha</label>
+<input type="password" ng-model="user.password" name="password" class="form-control"  ng-minlength="3" ng-maxlength="8" title="3 to 8 characters" />
+    <span class="help-block" ng-show="userForm.password.$dirty && userForm.password.$error.minlength " >Senha deve ter no minimo 3 characters!</span>
+    <span class="help-block" ng-show="userForm.password.$dirty && userForm.password.$error.maxlength " >Senha deve ter no maximo 8 characters!</span>
+    <span class="help-block" ng-show="userForm.password.$dirty && userForm.password.$error.required" >Informe uma senha</span>
+</div>
+<div class="form-group" ng-class="{ 'has-error' : userForm.ucPassword.$invalid && !userForm.ucPassword.$pristine  }">
+      <label >Confirmar senha</label>
+    <input type="password" ng-model="ucPassword" name="ucPassword" class="form-control" required  ng-minlength="3" ng-maxlength="8" title="3 to 8 characters" />
+    
+    <span class="help-block" ng-show="userForm.ucPassword.$dirty && userForm.ucPassword.$error.required" >Digite novamente a senha</span>
+    <span class="help-block" ng-show="(userForm.password.$dirty && userForm.ucPassword.$dirty ) && ( user.password != ucPassword )" >Senha são diferentes</span>
+    
+</div>
+<div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine  }">
+      <label >Nome</label>
+      <input type="text" name="name" class="form-control" ng-model="user.name" required>
+      <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block" >Seu nome</p>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
+      <label>Telefone</label>
+      <input type="tel" name="phone" placeholder="Telefone" class="form-control" ng-model="user.phone" >
+      <p ng-show="userForm.phone.$invalid && !userForm.phone.$pristine" class="help-block">Informe telefone</p>
+    </div>
+
+    
+    <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+      <label >Email</label>
+      <input type="email" name="email" placeholder="Email" class="form-control" ng-model="user.email" ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/"> 
+      <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block" >Informe e-mail</p>
+    </div>
+    
+<div ng-show="select" class="form-group">
+    <label translate="label.profile.acess-levels"></label>
+        <select class="form-control"  ng-model="user.access_levels" 
+                ng-options="item.id as item.description for item in access"> 
+            <option value="">Selecione um nivel de acesso</option>
+        </select> 
+</div>
+
+    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid" >salvar </button> <a type="submit" href="#/web/profile" class="btn btn-default" >Voltar</a>

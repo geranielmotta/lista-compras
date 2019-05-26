@@ -1,0 +1,57 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#">lista de usuários</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+       
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="table-responsive" ng-show="table">
+
+            <input ng-model="filter" type="text" class="form-control " placeholder="Buscar usuários">
+            <br>
+
+            <table class="table table-striped table-bordered table-hover" >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Email</th>
+                        <th>Nivel Acesso</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat=" user in users| filter:filter ">
+                        <td>#</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.phone}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.access_levels}}</td>
+                        <td> <button ng-if="user.access_levels != 'Root'" class="btn btn-primary btn-mini" ng-click="updateUser({id: user.id})"><i class="fa fa-edit" translate="button.edit"></i></button> 
+                            <button  ng-if="user.access_levels != 'Root'" class="btn btn-danger btn-mini" ng-click="deleteUser({user: user})"><i class="fa fa-trash" translate="button.delete"></i></button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+        <div ng-show="buttonAdd" class="panel panel-footer">
+            <a  class="btn btn-success " ng-click="createUser()"> Cadastrar <i class="fa fa-plus"></i> </a>
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->
+</div>
+</div>

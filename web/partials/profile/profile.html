@@ -1,0 +1,39 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">home</a>
+        </li>
+        <li>
+            <a href="#/web/profile">perfil</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+       Perfil
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="fb-profile">
+        <img align="left" class="fb-image-lg" src="./img/trigo.jpg" alt="Profile image example"/>
+        <img align="left" class="fb-image-profile thumbnail" src="./img/boy-512.png" alt="Profile image example"/>
+        <div class="fb-profile-text">
+         
+        <h1>{{user.name}}</h1>
+      
+      <p>
+        <i class="fa fa-envelope"></i>  {{user.email}}<br>
+        <i class="fa fa-phone"></i>    {{user.phone}} <br>
+        <i class="fa fa-level-up"></i> {{user.access_levels}} 
+      </p>
+      <p><button  class="btn btn-primary btn-mini" ng-click="updateProfile({id: user.id})">Editar <i class="fa fa-edit"></i> </button></p>
+        </div>
+        </div>
+    </div>
+        
+        <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+</div>

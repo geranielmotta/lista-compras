@@ -1,0 +1,28 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#/web/profile">Perfil</a>
+        </li>
+        <li>
+            <a href="#">Editar</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading ">
+        Profile
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form role="userForm" name="userForm" class="form-horizontal" novalidate ng-submit="updateProfile()">
+                <div ng-include="'partials/profile/_form.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

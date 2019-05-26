@@ -1,0 +1,92 @@
+
+<!-- topbar starts -->
+<div class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-inner">
+        <button type="button" ng-click="active = !active" class="navbar-toggle pull-left animated flip " ng-class="{active : active}" >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-brand"> 
+            <a class="navbar-brand" href="index.html"> 
+                <span></span></a>
+        </div>
+
+        <!-- user dropdown starts -->
+        <div class="btn-group pull-right">
+            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs"> {{user}}</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li  >
+                    <a href="#/web/profile"><i class="fa fa-user fa-fw"></i> Perfil </a>
+                </li> 
+                <li class="divider"></li>
+                <li>
+                    <a href="#/logout"><i class="fa fa-sign-out fa-fw"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+        <!-- user dropdown ends -->
+
+    </div>
+</div>
+<!-- topbar ends -->
+<div class="ch-container">
+    <div class="row">
+
+        <!-- left menu starts -->
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav " ng-class="{active : active}">
+                <div class="nav-canvas">
+                    <div class="nav-sm nav nav-stacked">
+
+                    </div>
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        <li class="nav-header">Menu</li>
+                        <li><a class="ajax-link" href="#/web/home"><i class="glyphicon glyphicon-home"></i><span> Home</span></a>
+                        </li>
+                        
+        
+        
+                        <li  >
+                            <a class="ajax-link" href="#/web/field"><i class="fa fa-list fa-fw"></i><span> Listas de compras </span></a>
+                        </li>
+                        <li restrict access="100 1000" class="nav-header">Configurações</li>
+                        <li restrict access="100 1000">
+                                <a class="ajax-link" href="#/web/user"><i class="fa fa-user fa-fw"></i><span>Usuário </span></a>
+                            </li>
+                        <li>
+                            <a class="ajax-link" href="#/web/experiment"><i class="fa fa-filter fa-fw"></i><span>Produtos </span></a>
+                        </li>
+                        <li restrict access="100 1000" >
+                            <a class="ajax-link" href="#/web/soil"><i class="fa fa-minus fa-fw"></i><span> Categoria</span></a>
+                        </li>
+                        <li restrict access="100 1000">
+                            <a class="ajax-link" href="#/web/horizon"><i class="fa fa-lock fa-fw"></i><span> Niveis de acesso </span></a>
+                        </li>
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+        <!-- left menu ends -->
+
+        <div ui-view="dashboard"></div>
+    </div><!--/fluid-row-->
+
+
+
+    <hr>
+
+
+    <footer class="row">
+        <p class="col-md-12">
+            Engenharia de software &COPY; 2019 <a href="#">lista de compras</a>
+        </p>
+    </footer>
+
+</div><!--/.fluid-container-->
+

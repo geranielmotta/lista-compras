@@ -40,10 +40,11 @@ class User {
         $sql = "INSERT INTO user(username, password, name, phone, email, access_levels) VALUES (:username, :password, :name, :phone, :email, :access_levels)";
 
         try {
+            $senha = md5($user->password);
             $db = getConnection();
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":username", $user->username, PDO::PARAM_STR);
-            $stmt->bindParam(":password", md5($user->password), PDO::PARAM_STR);
+            $stmt->bindParam(":password", $senha, PDO::PARAM_STR);
             $stmt->bindParam(":name", $user->name, PDO::PARAM_STR);
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);

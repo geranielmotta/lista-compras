@@ -1,0 +1,63 @@
+<div class="cotn_principal">
+        <div class="cont_centrar">
+        
+          <div class="cont_login">
+        <div class="cont_info_log_sign_up">
+              <div class="col_md_login">
+        <div class="cont_ba_opcitiy">
+                
+                <h2>LOGIN</h2>  
+          <p></p> 
+          <button class="btn_login" onclick="cambiar_login()">LOGIN</button>
+          </div>
+          </div>
+        <div class="col_md_sign_up">
+        <div class="cont_ba_opcitiy">
+          <h2>INSCREVER-SE</h2>
+        
+          
+          <p></p>
+        
+          <button class="btn_sign_up" onclick="cambiar_sign_up()">IR</button>
+        </div>
+          </div>
+               </div>
+        
+            
+            <div class="cont_back_info">
+               <div class="cont_img_back_grey">
+               <img src="https://www.gtagangwars.de/suite/images/styleLogo-6bd77433ddf78bd8477ea7306e804f677bc925d0.png" alt="" />
+               </div>
+               
+            </div>
+        <div class="cont_forms" >
+            <div class="cont_img_back_">
+               <img src="https://www.gtagangwars.de/suite/images/styleLogo-6bd77433ddf78bd8477ea7306e804f677bc925d0.png" alt="" />
+               </div>
+               <form  ng-submit="doLogin()">       
+         <div class="cont_form_login">
+        <a href="#" onclick="ocultar_login_sign_up()" ><i class="fa fa-times"></i></a>
+           <h2>LOGIN</h2>
+           
+           <input  placeholder="E-mail" name="email" type="email" ng-model="data.email" required>
+         <input  placeholder="Senha" name="password" type="password" ng-model="data.password" required>
+         
+        <button class="btn_login" type="submit" >LOGIN</button>
+        
+          </div>
+        </form>
+           <div class="cont_form_sign_up">
+        <a href="#" onclick="ocultar_login_sign_up()"><i class="fa fa-times"></i></a>
+             <h2>Faça seu cadastro</h2>
+        <input type="text" placeholder="Nome" />
+        <input type="text" placeholder="Email" />
+        <input type="password" placeholder="Senha" />
+        <button class="btn_sign_up" onclick="cambiar_sign_up()">Salvar</button>
+        
+          </div>
+        
+            </div>
+            
+          </div>
+         </div>
+        </div>
