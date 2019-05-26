@@ -32,18 +32,18 @@ class ShoppingList {
     public function newShoppingList() {
 
         $request = \Slim\Slim::getInstance()->request();
-        $List = json_decode($request->getBody());
+        $shoppingList = json_decode($request->getBody());
         $sql = "INSERT INTO shoppinglist( date, user) VALUES (:date, :user)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":date",     $List->date,     PDO::PARAM_STR);
-            $stmt->bindParam(":user",     $List->user,     PDO::PARAM_STR);
+            $stmt->bindParam(":date",     $shoppingList->date,     PDO::PARAM_STR);
+            $stmt->bindParam(":user",     $shoppingList->user,     PDO::PARAM_STR);
             $stmt->execute();
-            $List->id = $db->lastInsertId();
+            $shoppingList->id = $db->lastInsertId();
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "shoppinglist":' . json_encode($shoppingList) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
@@ -123,9 +123,9 @@ class ShoppingList {
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
-            $List = $stmt->fetchObject();
+            $shoppingList = $stmt->fetchObject();
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "shoppinglist":' . json_encode($shoppingList) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
@@ -167,9 +167,9 @@ class ShoppingList {
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":user", $user);
             $stmt->execute();
-            $List = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $shoppingList = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
-            echo '{"type":true, "shoppinglist":' . json_encode($List) . '}';
+            echo '{"type":true, "shoppinglist":' . json_encode($shoppingList) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
