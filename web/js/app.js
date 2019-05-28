@@ -104,6 +104,55 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
           }
         }
     })
+
+    .state('web.shoppinglist',{
+      url:'/shoppinglist/list',
+      views: {
+        'dashboard': {
+          templateUrl:'partials/shoppinglist/shoppinglist-list.html',
+          controller:'ShoppingListController'
+        }
+      }
+  })
+
+    .state('web.shoppinglist-create',{
+      url:'/shoppinglist/create',
+      views: {
+        'dashboard': {
+          templateUrl:'partials/shoppinglist/shoppinglist-create.html',
+          controller:'ShoppingListCreateController'
+        }
+      }
+  })
+  .state('web.category-list',{
+    url:'/category',
+    views: {
+      'dashboard': {
+        templateUrl:'partials/category/category-list.html',
+        controller:'CategoryListController'
+      }
+    }
+})
+
+.state('web.category-create',{
+    url:'/category/create',
+    views: {
+      'dashboard': {
+        templateUrl:'partials/category/category-create.html',
+        controller:'CategoryCreateController'
+      }
+    }
+})
+
+.state('web.category-update',{
+    url:'/category/:id/update',
+    views: {
+      'dashboard': {
+        templateUrl:'partials/category/category-update.html',
+        controller:'CategoryUpdateController'
+      }
+    }
+})
     
     
 

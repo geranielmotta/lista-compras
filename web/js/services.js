@@ -21,9 +21,6 @@ angular.module('services',[])
             getAllUser: function(success, error) {
                 $http.get(baseUrl + '/user').success(success).error(error);
             },
-            getAllUserOfOrganization: function(id,success, error) {
-                $http.get(baseUrl + '/user/organization/'+id).success(success).error(error);
-            },
             save: function(object,success, error) {
                 $http.post(baseUrl + '/user',object).success(success).error(error);
             },
@@ -48,5 +45,48 @@ angular.module('services',[])
                 $http.get(baseUrl + '/accesslevels').success(success).error(error);
             }
         };
+}])
+
+.factory('ShoppingList', ['$http', function($http){
+    return {
+        getOne: function(id,success, error) {
+            $http.get(baseUrl + '/shoppinglist/'+id).success(success).error(error);
+        },
+        getAllUser: function(success, error) {
+            $http.get(baseUrl + '/shoppinglist').success(success).error(error);
+        },
+        getAllShoppingListUser: function(user,success, error) {
+            $http.get(baseUrl + '/shoppinglist/user/'+user).success(success).error(error);
+        },
+        save: function(object,success, error) {
+            $http.post(baseUrl + '/shoppinglist',object).success(success).error(error);
+        },
+        update: function(id,object,success, error) {
+            $http.put(baseUrl + '/shoppinglist/'+id,object).success(success).error(error);
+        },
+        delete: function(id,success, error) {
+            $http.delete(baseUrl + '/shoppinglist/'+id).success(success).error(error);
+        }
+    };
+}])
+
+.factory('Category', ['$http', function($http){
+    return {
+        getOne: function(id,success, error) {
+            $http.get(baseUrl + '/category/'+id).success(success).error(error);
+        },
+        getAllCategory: function(success, error) {
+            $http.get(baseUrl + '/category').success(success).error(error);
+        },
+        save: function(object,success, error) {
+            $http.post(baseUrl + '/category',object).success(success).error(error);
+        },
+        update: function(id,object,success, error) {
+            $http.put(baseUrl + '/category/'+id,object).success(success).error(error);
+        },
+        delete: function(id,success, error) {
+            $http.delete(baseUrl + '/category/'+id).success(success).error(error);
+        }
+    };
 }])
     

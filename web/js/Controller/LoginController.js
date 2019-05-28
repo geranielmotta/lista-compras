@@ -1,8 +1,8 @@
 angular.module('loginControllers', [])
-.controller('LoginController', function ($scope, $state, $localStorage, Login) {
+.controller('LoginController', function ($scope, $state, $localStorage, Login,ShoppingList) {
 
     if ((typeof ($localStorage.token) !== 'undefined') || (typeof ($localStorage.user) !== 'undefined')) {
-        UserField.getUserOfField($localStorage.user, function (res) {
+        ShoppingList.getAllShoppingListUser($localStorage.user, function (res) {
             $state.go('web.home', null, {'reload': true});
         }, function () {
             $scope.data.email = null;

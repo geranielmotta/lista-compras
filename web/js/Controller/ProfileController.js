@@ -55,7 +55,7 @@ angular.module('profileControllers', [])
                 if ($scope.user.access_levels == null) {
                     if ($scope.user.access_levels == null) {
                         ngDialog.open({
-                            template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>'+$translate.instant('alert-popup.user.accesslevels')+'</p>',
+                            template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>Selecione um nivel de acesso</p>',
                             className: 'ngdialog-theme-default',
                             plain: true
                         });

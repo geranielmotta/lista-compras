@@ -131,12 +131,14 @@ class ShoppingList {
         }
     }
 /**
- * @api {GET} /shoppinglist/ getAllShoppingList
+ * @api {GET} /shoppinglist/user/:user getAllShoppingListOfUser
  * @apiVersion 1.0.0
- * @apiName getAllShoppingList
+ * @apiName getAllShoppingListOfUser
  * @apiGroup ShoppingList
  * @apiPermission none
  *
+ * @apiParam {int} user id do usuário a ser selecionado
+ * 
  * @apiDescription Esta função seleciona todos os registro
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
@@ -155,7 +157,7 @@ class ShoppingList {
  * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
  * 
  */
-    public function getAllShoppingList($user) {
+    public function getAllShoppingListOfUser($user) {
         $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM shoppinglist l 
                     INNER JOIN cart c ON c.shoppinglist = l.id

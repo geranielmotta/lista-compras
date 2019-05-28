@@ -1,0 +1,28 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#/web/category">Categoria</a>
+        </li>
+        <li>
+            <a href="#">Nova Categoria</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading ">
+       Cadastrar nova categoria
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form role="categoryForm" name="categoryForm" class="form-horizontal" novalidate ng-submit="createCategory()">
+                <div ng-include="'partials/category/_form.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

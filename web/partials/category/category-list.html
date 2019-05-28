@@ -1,0 +1,51 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#">Lista de categorias</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+       
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="table-responsive" >
+
+            <input ng-model="filter" type="text" class="form-control " placeholder="Buscar uma categoria">
+            <br>
+
+            <table class="table table-striped table-bordered table-hover" >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat=" category in category| filter:filter ">
+                        <td>#</td>
+                        <td>{{category.name}}</td>
+                        <td> <button class="btn btn-primary btn-mini" ng-click="updateCategory({id: category.id})"><i class="fa fa-edit" ></i>Editar</button> 
+                            <button class="btn btn-danger btn-mini" ng-click="deleteCategory({category: category})"><i class="fa fa-trash" ></i>Delete</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.table-responsive -->
+        <div class="panel panel-footer">
+            <a  class="btn btn-success " ng-click="createCategory()"> Cadastrar <i class="fa fa-plus"></i> </a>
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->
+</div>
+</div>

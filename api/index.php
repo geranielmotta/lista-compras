@@ -50,11 +50,11 @@ $app->delete('/user/:id', array('User','deleteUser'));
 $app->get('/user/:id', array('User','getOneUser'));
 $app->get('/user', array('User','getAllUser'));
 
-//List
+//ShoppingList
 $app->post('/shoppinglist', array('ShoppingList','newShoppingList'));
 $app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
 $app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
-$app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingList'));
+$app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingListOfUser'));
 
 //Category
 $app->post('/category', array('Category','newCategory'));

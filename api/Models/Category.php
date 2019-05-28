@@ -194,10 +194,10 @@ public function updateCategory($id) {
  * 
  */
     public function getAllCategory() {
-        $sql = "SELECT name FROM Category  ORDER BY name DESC";
+        $sql = "SELECT id,name FROM category  ORDER BY name DESC";
         try {
             $db = getConnection();
-            $stmt = $db->prepare($sql);
+            $stmt = $db->query($sql);
             $category = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
             echo '{"type":true, "category":' . json_encode($category) . '}';
