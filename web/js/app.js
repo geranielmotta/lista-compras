@@ -105,34 +105,15 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
         }
     })
 
-    .state('web.shoppinglist',{
-      url:'/shoppinglist/list',
+    .state('web.shoppinglist-add',{
+      url:'/shoppinglist/add/:id',
       views: {
         'dashboard': {
-          templateUrl:'partials/shoppinglist/shoppinglist-list.html',
-          controller:'ShoppingListController'
+          templateUrl:'partials/shoppinglist/cart-list.html',
+          controller:'ShoppingListAddController'
         }
       }
   })
-
-    .state('web.shoppinglist-create',{
-      url:'/shoppinglist/create',
-      views: {
-        'dashboard': {
-          templateUrl:'partials/shoppinglist/shoppinglist-create.html',
-          controller:'ShoppingListCreateController'
-        }
-      }
-  })
-  .state('web.category-list',{
-    url:'/category',
-    views: {
-      'dashboard': {
-        templateUrl:'partials/category/category-list.html',
-        controller:'CategoryListController'
-      }
-    }
-})
 
 .state('web.category-create',{
     url:'/category/create',
@@ -153,7 +134,35 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
       }
     }
 })
-    
+.state('web.products',{
+  url:'/products',
+  views: {
+    'dashboard': {
+      templateUrl:'partials/products/products-list.html',
+      controller:'ProductsListController'
+    }
+  }
+})
+
+.state('web.products-create',{
+  url:'/products/create',
+  views: {
+    'dashboard': {
+      templateUrl:'partials/products/products-create.html',
+      controller:'ProductsCreateController'
+    }
+  }
+})
+
+.state('web.products-update',{
+  url:'/products/:id/update',
+  views: {
+    'dashboard': {
+      templateUrl:'partials/products/products-update.html',
+      controller:'ProductsUpdateController'
+    }
+  }
+})
     
 
     $urlRouterProvider.otherwise('/login');

@@ -52,9 +52,16 @@ angular.module('categoryController', [])
     $scope.category = {};
 
     $scope.createCategory = function () {
-        Category.save($scope.category, function () {
+        Category.save($scope.category, function (res) {
+                if(!res.type){
+                    ngDialog.open({
+                        template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>Erro ao inserir os campos</br>'+ res +'</p>',
+                        className: 'ngdialog-theme-default',
+                        plain: true
+                    });
+                }
                 ngDialog.open({
-                    template: 'partials/notification/creat/creat-confirmed.html',
+                    template: 'partials/notification/create/create-confirmed.html',
                     className: 'ngdialog-theme-default'
                 });
                 $state.go('web.category-list');
@@ -74,13 +81,27 @@ angular.module('categoryController', [])
     });    
 
     $scope.updateCategory = function () {
-        Category.update($stateParams.id, $scope.category, function () {
+        console.log($scope.category);
+        Category.update($stateParams.id, $scope.category, function (res) {
+            if(!res.type){
+                ngDialog.open({
+                    template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>Erro ao atualizar os campos</p>',
+                    className: 'ngdialog-theme-default',
+                    plain: true
+                });
+                $state.go('web.category-update', {'id': $stateParams.id});
+            }else{
+                ngDialog.open({
+                    template: 'partials/notification/update/update-confirmed.html',
+                    className: 'ngdialog-theme-default'
+                });
+                $state.go('web.category-list');
+            }
+        }, function () {
             ngDialog.open({
-                template: 'partials/notification/update/update-confirmed.html',
+                template: 'partials/notification/error/erro-update.html',
                 className: 'ngdialog-theme-default'
             });
-            $state.go('web.category-list');
         });
     };
-
 })

@@ -1,0 +1,28 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#/web/products">Categoria</a>
+        </li>
+        <li>
+            <a href="#">Editar um produto</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading ">
+       atualizar informações
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form role="productsForm" name="productsForm" class="form-horizontal" novalidate ng-submit="updateProducts()">
+                <div ng-include="'partials/products/_form.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

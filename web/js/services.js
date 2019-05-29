@@ -61,13 +61,24 @@ angular.module('services',[])
         save: function(object,success, error) {
             $http.post(baseUrl + '/shoppinglist',object).success(success).error(error);
         },
-        update: function(id,object,success, error) {
-            $http.put(baseUrl + '/shoppinglist/'+id,object).success(success).error(error);
-        },
         delete: function(id,success, error) {
             $http.delete(baseUrl + '/shoppinglist/'+id).success(success).error(error);
         }
     };
+}])
+
+.factory('Cart',['$http', function($http){
+    return {
+        addProducts: function(list,object, success, error){
+            $http.post(baseUrl + '/cart/addproducts/shoppinglist/'+list,object).success(success).error(error);
+        },
+        remove: function(products, success, error){
+            $http.delete(baseUrl + '/cart/removeproducts/products/'+products).success(success).error(error);
+        },
+        getAllCartOfShoppingList:function(shoppinglist, success, error){
+            $http.get(baseUrl + '/cart/shoppinglist/'+shoppinglist).success(success).error(error);
+        }
+    }
 }])
 
 .factory('Category', ['$http', function($http){
@@ -89,4 +100,22 @@ angular.module('services',[])
         }
     };
 }])
-    
+.factory('Products', ['$http', function($http){
+    return {
+        getOne: function(id,success, error) {
+            $http.get(baseUrl + '/products/'+id).success(success).error(error);
+        },
+        getAllProducts: function(success, error) {
+            $http.get(baseUrl + '/products').success(success).error(error);
+        },
+        save: function(object,success, error) {
+            $http.post(baseUrl + '/products',object).success(success).error(error);
+        },
+        update: function(id,object,success, error) {
+            $http.put(baseUrl + '/products/'+id,object).success(success).error(error);
+        },
+        delete: function(id,success, error) {
+            $http.delete(baseUrl + '/products/'+id).success(success).error(error);
+        }
+    };
+}])    

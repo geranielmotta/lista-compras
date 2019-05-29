@@ -21,7 +21,7 @@ class Products {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"Products": {"id":"1","name":"Feijão"}}
+ *   {"type": true,"Products": {"id":"1","description":"Feijão"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -33,13 +33,13 @@ class Products {
 
         $request = \Slim\Slim::getInstance()->request();
         $products = json_decode($request->getBody());
-        $sql = "INSERT INTO products(name,value,category) VALUES (:name,:value,:category)";
+        $sql = "INSERT INTO products(description,price,category) VALUES (:description,:price,:category)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":name", $products->name,     PDO::PARAM_STR);
-            $stmt->bindParam(":value", strval($products->value),    PDO::PARAM_STR);
+            $stmt->bindParam(":description", $products->description,     PDO::PARAM_STR);
+            $stmt->bindParam(":price", strval($products->price),    PDO::PARAM_STR);
             $stmt->bindParam(":category", $products->category, PDO::PARAM_INT);
             $stmt->execute();
             $products->id = $db->lastInsertId();
@@ -80,12 +80,12 @@ class Products {
 public function updateProducts($id) {
     $request = \Slim\Slim::getInstance()->request();
     $products = json_decode($request->getBody());
-    $sql = "UPDATE products SET name=:name,value=:value,category=:category WHERE id=:id";
+    $sql = "UPDATE products SET description=:description,price=:price,category=:category WHERE id=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(":name",     $products->name,          PDO::PARAM_STR);
-        $stmt->bindParam(":value",    strval($products->value), PDO::PARAM_STR);
+        $stmt->bindParam(":description",     $products->description,          PDO::PARAM_STR);
+        $stmt->bindParam(":price",    strval($products->price), PDO::PARAM_STR);
         $stmt->bindParam(":category", $products->category,      PDO::PARAM_INT);
         $stmt->bindParam(":id",       $id,                      PDO::PARAM_INT);
         $stmt->execute();
@@ -159,7 +159,7 @@ public function updateProducts($id) {
  * 
  */
     public function getOneProducts($id) {
-        $sql = "SELECT p.name,p.value,c.name as category
+        $sql = "SELECT p.description,p.price,c.id as category
                 FROM products p
                 JOIN category c ON c.id = p.category
                 WHERE p.id=:id";
@@ -201,13 +201,13 @@ public function updateProducts($id) {
  * 
  */
     public function getAllProducts() {
-        $sql = "SELECT p.name,p.value,c.name as category
+        $sql = "SELECT p.id, p.description,p.price,c.description as category
                 FROM products p
                 JOIN category c ON c.id = p.category
-                ORDER BY p.name DESC";
+                ORDER BY p.description DESC";
         try {
             $db = getConnection();
-            $stmt = $db->prepare($sql);
+            $stmt = $db->query($sql);
             $products = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
             echo '{"type":true, "products":' . json_encode($products) . '}';

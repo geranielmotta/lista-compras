@@ -1,0 +1,46 @@
+<div id="content" class="col-lg-10 col-sm-10">
+    <!-- content starts -->
+    <div>
+        <ul class="breadcrumb">
+            <li>
+                <a>Home</a>
+            </li>
+        </ul>
+    </div>
+<div class="container">
+    <div class="card shopping-cart">
+            aaaaaaa
+    </div>    
+    <div class="card-body">
+        <!-- PRODUCT -->
+        <div ng-repeat=" list in cart">
+            <div class="row">
+                <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+                    <h4 class="product-name"><strong>{{list.description}}</strong></h4>
+                </div>
+                <div class="col-12 col-sm-12 text-sm-center col-md-4 text-center row">
+                    <div class="col-5 col-sm-5 col-md-5 text-center" style="padding-top: 5px">
+                        <h4><strong>R$ {{list.price}} <span class="text-muted">x</span></strong></h4>
+                    </div>
+                    <div class="col-5 col-sm-5 col-md-5">
+                        <div class="quantity">
+                            <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
+                                size="4">
+                        </div>
+                    </div>
+                    <div class="col-2 col-sm-2 col-md-2 text-right">
+                        <button type="button" class="btn btn-danger ">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>    
+    
+        <div class="card-footer">
+            Total : <b>{{amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</b>  
+        </div>
+     </div> 
+    </div>      
+</div>

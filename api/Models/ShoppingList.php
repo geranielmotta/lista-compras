@@ -158,7 +158,7 @@ class ShoppingList {
  * 
  */
     public function getAllShoppingListOfUser($user) {
-        $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
+        $sql = "SELECT l.id, ROUND(SUM(p.price), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM shoppinglist l 
                     INNER JOIN cart c ON c.shoppinglist = l.id
                     INNER JOIN products p ON p.id = c.products

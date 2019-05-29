@@ -50,7 +50,6 @@ angular.module('profileControllers', [])
             }
             
     });
-            
             $scope.updateProfile = function () {
                 if ($scope.user.access_levels == null) {
                     if ($scope.user.access_levels == null) {

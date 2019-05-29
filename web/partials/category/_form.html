@@ -1,9 +1,9 @@
 
 
-<div class="form-group" ng-class="{ 'has-error' : categoryForm.name.$invalid && !categoryForm.name.$pristine  }">
-    <label >Nome</label>
-    <input type="text" name="name" class="form-control" ng-model="category.name" required>
-    <p ng-show="categoryForm.name.$invalid && !categoryForm.name.$pristine" class="help-block" >Informe um nome para a categoria</p>
+<div class="form-group" ng-class="{ 'has-error' : categoryForm.description.$invalid && !categoryForm.description.$pristine  }">
+    <label >Descrição</label>
+    <input type="text" name="description" class="form-control" ng-model="category.description" required>
+    <p ng-show="categoryForm.description.$invalid && !categoryForm.description.$pristine" class="help-block" >Informe um descrição para a categoria</p>
   </div>
 
     <button type="submit" class="btn btn-primary" ng-disabled="categoryForm.$invalid" > Salvar</button> <a type="submit" href="#/web/category" class="btn btn-default" >Voltar</a>

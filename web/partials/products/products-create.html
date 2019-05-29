@@ -1,0 +1,28 @@
+<div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+            <div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="#/web/home">Home</a>
+        </li>
+        <li>
+            <a href="#/web/products">Produto</a>
+        </li>
+        <li>
+            <a href="#">Novo produto</a>
+        </li>
+    </ul>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading ">
+       Cadastrar novo produto
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <form role="productsForm" name="productsForm" class="form-horizontal" novalidate ng-submit="createProducts()">
+                <div ng-include="'partials/products/_form.html'"></div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

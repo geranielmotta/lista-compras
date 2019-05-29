@@ -2,7 +2,7 @@
 
 class Cart {
 /**
- * @api {POST} /List newCart
+ * @api {POST} /cart/addproducts addCart
  * @apiVersion 1.0.0
  * @apiName newCart
  * @apiGroup Cart
@@ -29,7 +29,7 @@ class Cart {
  * @apiSampleRequest http://api.lista-compras/api/Cart
  * 
  */
-    public function newCart() {
+    public function addProductsInCart() {
 
         $request = \Slim\Slim::getInstance()->request();
         $cart = json_decode($request->getBody());
@@ -50,7 +50,7 @@ class Cart {
     }
 
 /**
- * @api {DELETE} /List/:id deleteCart
+ * @api {DELETE} /cart/:id deleteCart
  * @apiVersion 1.0.0
  * @apiName deleteCart
  * @apiGroup Cart
@@ -71,7 +71,7 @@ class Cart {
  * @apiSampleRequest off
  * 
  */
-    public function deleteCart($id) {
+    public function deleteProductsInCart($id) {
 
         $sql = "DELETE FROM List WHERE id=:id";
         try {
@@ -80,52 +80,6 @@ class Cart {
             $stmt->bindParam(":id", $id);
             $stmt->execute();
             $db = null;
-        } catch (PDOException $e) {
-            echo '{"type":false, "data":"' . $e->getMessage() . '"}';
-        }
-    }
-/**
- * @api {GET} /List/:id getOneCart
- * @apiVersion 1.0.0
- * @apiName getOneCart
- * @apiGroup Cart
- * @apiPermission none
- *
- * @apiDescription Esta função seleciona um registro
- * 
- * @apiParam {int} id Id a ser selecionado
- * 
- *
- * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
- * @apiSuccess {object[] } object Retorna um objeto com os valores
- * 
- * @apiError {boolean}type  false caso ocorra um erro.
- * @apiError {string} data  Mensagem de erro.
- * 
- * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"Cart": {"id":"1","spending":"200","amount":"3","shoppinglist":"1","products":"20/05/2019"}}
- * @apiErrorExample {json} Error-Response:
- *      
- *     {"type": false,"data": "error"}
- * 
- * @apiSampleRequest off
- * 
- */
-    public function getOneCart($id) {
-        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.shoppinglist, l.products
-                    FROM List l 
-                        INNER JOIN cart c ON c.list = l.id
-                        INNER JOIN products p ON p.id = c.products
-                        INNER JOIN shoppinglist u ON u.id = l.shoppinglist    
-                    WHERE l.id=:id";
-        try {
-            $db = getConnection();
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(":id", $id);
-            $stmt->execute();
-            $cart = $stmt->fetchObject();
-            $db = null;
-            echo '{"type":true, "Cart":' . json_encode($cart) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
@@ -155,13 +109,13 @@ class Cart {
  * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
  * 
  */
-    public function getAllCart($shoppinglist) {
-        $sql = "SELECT l.id, ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.shoppinglist, l.products
-                    FROM cart c
-                    INNER JOIN list c ON c.list = l.id
-                    INNER JOIN products p ON p.id = c.products
-                    INNER JOIN shoppinglist u ON u.id = l.shoppinglist    
-                    WHERE u.id=:shoppinglist ORDER BY l.id DESC";
+    public function getAllCartOfShoppingList($shoppinglist) {
+        $sql = "SELECT s.id as shoppinglist, p.id as products, p.price, p.description, cat.description as category
+                FROM cart c
+                INNER JOIN products p ON p.id = c.products
+                INNER JOIN category cat ON cat.id = p.category
+                INNER JOIN shoppinglist s ON s.id = c.shoppinglist    
+                WHERE s.id=:shoppinglist ORDER BY p.description DESC";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -169,7 +123,7 @@ class Cart {
             $stmt->execute();
             $cart = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
-            echo '{"type":true, "Cart":' . json_encode($cart) . '}';
+            echo '{"type":true, "cart":' . json_encode($cart) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }

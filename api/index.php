@@ -8,6 +8,7 @@ require 'Models/User.php';
 require 'Models/ShoppingList.php';
 require 'Models/Category.php';
 require 'Models/Products.php';
+require 'Models/Cart.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -55,6 +56,11 @@ $app->post('/shoppinglist', array('ShoppingList','newShoppingList'));
 $app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
 $app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
 $app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingListOfUser'));
+
+//Cart
+$app->post('/cart/addproducts', array('Cart','addProductsInCart'));
+$app->delete('/cart/deleteproducts/:id', array('Cart','deleteProductsInCart'));
+$app->get('/cart/shoppinglist/:id', array('Cart','getAllCartOfShoppingList'));
 
 //Category
 $app->post('/category', array('Category','newCategory'));

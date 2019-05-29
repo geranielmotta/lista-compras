@@ -94,12 +94,13 @@ class User {
     public function updateUser($id) {
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());
-        $sql = "UPDATE user SET username=:username, password=:password, name=:name, phone=:phone, email=:email,access_levels=:access_levels WHERE id=:id";
+        $sql = "UPDATE user SET username=:username, password=:password, name=:name, phone=:phone, email=:email, access_levels=:access_levels WHERE id=:id";
         try {
+            $senha = md5($user->password);
             $db = getConnection();
             $stmt = $db->prepare($sql);
             $stmt->bindParam(":username", $user->username, PDO::PARAM_STR);
-            $stmt->bindParam(":password", md5($user->password), PDO::PARAM_STR);
+            $stmt->bindParam(":password", $senha, PDO::PARAM_STR);
             $stmt->bindParam(":name", $user->name, PDO::PARAM_STR);
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);

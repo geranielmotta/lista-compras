@@ -1,66 +1,64 @@
 angular.module('userControllers', [])
-/*
-         * Inicio do crud usuários
-         */
+    /*
+             * Inicio do crud usuários
+             */
 
-        .controller('UserListController', function ($scope, $state, $localStorage, ngDialog, User) {
-            //variáveis para controler do ng-show
-            $scope.table = false;
-            $scope.buttonAdd = false;
+    .controller('UserListController', function ($scope, $state, $localStorage, ngDialog, User) {
+        //variáveis para controler do ng-show
+        $scope.table = false;
+        $scope.buttonAdd = false;
 
-            User.getAllUser(function (res) {
-                $scope.users = res.user;
-                if (res.user.length != 0) {
-                    // se encontrou mostra tabela
-                    $scope.table = true;
-                    $scope.buttonAdd = true;
-                } else {
-                    $scope.table = false;
-                    $scope.buttonAdd = true;
-                    ngDialog.open({
-                        template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i> </p>',
-                        className: 'ngdialog-theme-default',
-                        plain: true
-                    });
-                }
-            });
+        User.getAllUser(function (res) {
+            $scope.users = res.user;
+            if (res.user.length != 0) {
+                // se encontrou mostra tabela
+                $scope.table = true;
+                $scope.buttonAdd = true;
+            } else {
+                $scope.table = false;
+                $scope.buttonAdd = true;
+                ngDialog.open({
+                    template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i> Ainda não foram cadastrados usuários</p>',
+                    className: 'ngdialog-theme-default',
+                    plain: true
+                });
+            }
+        });
 
-
-            $scope.deleteUser = function (user) {
-                ngDialog.openConfirm({
-                    template: 'partials/notification/delete/delete-confirmed.html',
-                    className: 'ngdialog-theme-default'
-                })
-                    .then(function () {
-
-                        User.delete(user.user.id, function (res) {
-                            if (!res.type && res.type != null) {
-                                ngDialog.open({
-                                    template: 'partials/notification/error/erro-delete.html',
-                                    className: 'ngdialog-theme-default'
-                                });
-                            }
-
-                            $state.go($state.current, {}, { reload: true });
-                        }, function () {
+        $scope.deleteUser = function (user) {
+            ngDialog.openConfirm({
+                template: 'partials/notification/delete/delete-confirmed.html',
+                className: 'ngdialog-theme-default'
+            })
+                .then(function () {
+                    User.delete(user.user.id, function (res) {
+                        if (!res.type && res.type != null) {
                             ngDialog.open({
-                                template: 'partials/notification/delete/delete-fail.html',
+                                template: 'partials/notification/error/erro-delete.html',
                                 className: 'ngdialog-theme-default'
                             });
-                        });
+                        }
 
+                        $state.go($state.current, {}, { reload: true });
+                    }, function () {
+                        ngDialog.open({
+                            template: 'partials/notification/delete/delete-fail.html',
+                            className: 'ngdialog-theme-default'
+                        });
                     });
 
-            };
+                });
 
-            $scope.createUser = function () {
-                $state.go('web.user-create');
-            };
+        };
 
-            $scope.updateUser = function (user) {
-                $state.go('web.user-update', { 'id': user.id });
-            };
-        })
+        $scope.createUser = function () {
+            $state.go('web.user-create');
+        };
+
+        $scope.updateUser = function (user) {
+            $state.go('web.user-update', { 'id': user.id });
+        };
+    })
 
     .controller('UserCreateController', function ($scope, $state, ngDialog, $localStorage, User, AcessLevels) {
         $scope.hideBotton = true;
@@ -84,7 +82,7 @@ angular.module('userControllers', [])
         $scope.createUser = function () {
 
             if ($localStorage.access_levels == 1000) {
-                 if ($scope.user.access_levels == null) {
+                if ($scope.user.access_levels == null) {
                     ngDialog.open({
                         template: '<p class="alert alert-info">Selecione um nivel de acessoa para o usuário <i class="fa fa-2x fa-warning"></i></p>',
                         className: 'ngdialog-theme-default',
@@ -107,19 +105,19 @@ angular.module('userControllers', [])
 
                 }
             } else {
-                    User.save($scope.user, function () {
-                        ngDialog.open({
-                            template: 'partials/notification/creat/creat-confirmed.html',
-                            className: 'ngdialog-theme-default'
-                        });
-                        $state.go('web.user');
-                    }, function () {
-                        ngDialog.open({
-                            template: 'partials/notification/error/error-creat.html',
-                            className: 'ngdialog-theme-default'
-                        });
+                User.save($scope.user, function () {
+                    ngDialog.open({
+                        template: 'partials/notification/creat/creat-confirmed.html',
+                        className: 'ngdialog-theme-default'
                     });
-                
+                    $state.go('web.user');
+                }, function () {
+                    ngDialog.open({
+                        template: 'partials/notification/error/error-creat.html',
+                        className: 'ngdialog-theme-default'
+                    });
+                });
+
             }
         };
     })
@@ -128,9 +126,6 @@ angular.module('userControllers', [])
 
         $scope.hideBotton = true;
         $scope.user = {};
-
-        //  variáveis para guardar o id Organization e Acess_levels    
-        var valueOrganization;
         var valueAccess;
 
         User.getOne($stateParams.id, function (res) {
@@ -168,42 +163,40 @@ angular.module('userControllers', [])
 
         $scope.updateUser = function () {
             if ($localStorage.access_levels == 1000) {
-                if ($scope.user.organization == null) {
+                if ($scope.user.access_levels == null) {
                     ngDialog.open({
-                        template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i> </p>',
-                        className: 'ngdialog-theme-default',
-                        plain: true
-                    });
-                } else if ($scope.user.access_levels == null) {
-                    ngDialog.open({
-                        template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i></p>',
+                        template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>Selecione uma nivel de acesso</p>',
                         className: 'ngdialog-theme-default',
                         plain: true
                     });
                 } else {
-
-                    User.update($scope.user.id, $scope.user, function () {
+                    User.update($stateParams.id, $scope.user, function () {
                         ngDialog.open({
                             template: 'partials/notification/update/update-confirmed.html',
                             className: 'ngdialog-theme-default'
                         });
                         $state.go('web.user');
+                    }, function () {
+                        ngDialog.open({
+                            template: 'partials/notification/error/erro-update.html',
+                            className: 'ngdialog-theme-default'
+                        });
                     });
-
                 }
-
             } else {
-
-               
-
-                    User.update($scope.user.id, $scope.user, function () {
-                        ngDialog.open({
-                            template: 'partials/notification/update/update-confirmed.html',
-                            className: 'ngdialog-theme-default'
-                        });
-                        $state.go('web.user');
+                User.update($stateParams.id, $scope.user, function () {
+                    ngDialog.open({
+                        template: 'partials/notification/update/update-confirmed.html',
+                        className: 'ngdialog-theme-default'
                     });
-                
+                    $state.go('web.user');
+                }, function () {
+                    ngDialog.open({
+                        template: 'partials/notification/error/erro-update.html',
+                        className: 'ngdialog-theme-default'
+                    });
+                });
+
             }
         };
     })

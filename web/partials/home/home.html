@@ -1,11 +1,50 @@
 <div id="content" class="col-lg-10 col-sm-10">
-            <!-- content starts -->
-            <div>
-    <ul class="breadcrumb">
-        <li>
-            <a >Home</a>
-        </li>
-    </ul>
+    <!-- content starts -->
+    <div>
+<ul class="breadcrumb">
+<li>
+    <a href="#/web/home">Home</a>
+</li>
+</ul>
 </div>
+<div class="panel panel-default">
+<div class="panel-heading">
 
+</div>
+<!-- /.panel-heading -->
+<div class="panel-body">
+<div class="table-responsive" >
+    <input ng-model="filter" type="text" class="form-control " placeholder="Buscar um lista de compras">
+    <br>
+    <table class="table table-striped table-bordered table-hover" >
+        <thead>
+            <tr>
+                <th>#</th>
+                <th class="text-center">Data</th>
+                <th class="text-center">Quantidade</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat=" list in shoppinglists | filter:filter ">
+                <td>#</td>
+                <td class="text-center">{{list.date}}</td>
+                <td class="text-center">{{list.amount}}</td>
+                <td class="text-center">{{list.spending}}</td>
+                <td class="text-center"> <button class="btn btn-primary btn-mini" ng-click="addProductFromCart({id: list.id})"><i class="fa fas fa-shopping-cart"></i> </button> 
+                    <button class="btn btn-danger btn-mini" ng-click="deleteShoppingList({list: list})"><i class="fa fa-trash" ></i></button></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<!-- /.table-responsive -->
+<div class="panel panel-footer">
+    <a  class="btn btn-success " ng-click="createShoppingList()"> Cadastrar <i class="fa fa-plus"></i> </a>
+</div>
+<!-- /.panel-body -->
+</div>
+<!-- /.panel -->
+</div>
 </div>

@@ -33,12 +33,12 @@ class Category {
 
         $request = \Slim\Slim::getInstance()->request();
         $category = json_decode($request->getBody());
-        $sql = "INSERT INTO category(name) VALUES (:name)";
+        $sql = "INSERT INTO category(description) VALUES (:description)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":name",     $category->name,     PDO::PARAM_STR);
+            $stmt->bindParam(":description",     $category->description,     PDO::PARAM_STR);
             $stmt->execute();
             $category->id = $db->lastInsertId();
             $db = null;
@@ -78,12 +78,14 @@ class Category {
 public function updateCategory($id) {
     $request = \Slim\Slim::getInstance()->request();
     $category = json_decode($request->getBody());
-    $sql = "UPDATE category SET name=:name WHERE id=:id";
+    $sql = "UPDATE category SET description=:description WHERE id=:id";
     try {
         $db = getConnection();
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(":name", $category->name, PDO::PARAM_STR);
+
+        $stmt->bindParam(":description", $category->description, PDO::PARAM_STR);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
         $stmt->execute();
         $db = null;
         echo '{"type":true, "category":' . json_encode($category) . '}';
@@ -155,7 +157,7 @@ public function updateCategory($id) {
  * 
  */
     public function getOneCategory($id) {
-        $sql = "SELECT name FROM category WHERE id=:id";
+        $sql = "SELECT description FROM category WHERE id=:id";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -194,7 +196,7 @@ public function updateCategory($id) {
  * 
  */
     public function getAllCategory() {
-        $sql = "SELECT id,name FROM category  ORDER BY name DESC";
+        $sql = "SELECT id, description FROM category  ORDER BY description DESC";
         try {
             $db = getConnection();
             $stmt = $db->query($sql);
