@@ -114,6 +114,15 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
         }
       }
   })
+  .state('web.shoppinglist-add-form',{
+    url:'/cart/select-products/shoppinglist/:id',
+    views: {
+      'dashboard': {
+        templateUrl:'partials/shoppinglist/select-products.html',
+        controller:'ShoppingListSelectProductsController'
+      }
+    }
+})
 
 .state('web.category-create',{
     url:'/category/create',
@@ -134,6 +143,7 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
       }
     }
 })
+
 .state('web.products',{
   url:'/products',
   views: {

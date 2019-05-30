@@ -215,5 +215,23 @@ public function updateProducts($id) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
+
+    public function getAllProductsNotHaveCart(){
+        $sql = "SELECT p.id, p.description,p.price,c.description as category
+        FROM products p
+        JOIN category c ON c.id = p.category
+        WHERE p.id NOT IN (SELECT ca.products FROM cart ca
+                         			WHERE p.id = ca.products ) 
+        ORDER BY p.description DESC";
+        try {
+            $db = getConnection();
+            $stmt = $db->query($sql);
+            $products = $stmt->fetchAll(PDO::FETCH_OBJ);
+            $db = null;
+            echo '{"type":true, "products":' . json_encode($products) . '}';
+        } catch (PDOException $e) {
+            echo '{"type":false, "data":"' . $e->getMessage() . '"}';
+        }
+    }
 }
 ?>

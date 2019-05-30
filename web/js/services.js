@@ -58,7 +58,10 @@ angular.module('services',[])
         getAllShoppingListUser: function(user,success, error) {
             $http.get(baseUrl + '/shoppinglist/user/'+user).success(success).error(error);
         },
-        save: function(object,success, error) {
+        updateShoppingList: function(id,object,success, error) {
+            $http.put(baseUrl + '/shoppinglist/'+id,object).success(success).error(error);
+        },
+        createShoppingList: function(object,success, error) {
             $http.post(baseUrl + '/shoppinglist',object).success(success).error(error);
         },
         delete: function(id,success, error) {
@@ -69,11 +72,14 @@ angular.module('services',[])
 
 .factory('Cart',['$http', function($http){
     return {
-        addProducts: function(list,object, success, error){
-            $http.post(baseUrl + '/cart/addproducts/shoppinglist/'+list,object).success(success).error(error);
+        addProducts: function(object, success, error){
+            $http.post(baseUrl + '/cart/add-products',object).success(success).error(error);
         },
-        remove: function(products, success, error){
-            $http.delete(baseUrl + '/cart/removeproducts/products/'+products).success(success).error(error);
+        updateCart: function(id,object,success, error) {
+            $http.put(baseUrl + '/cart/producer/'+id,object).success(success).error(error);
+        },
+        remove: function(products,shoppinglist, success, error){
+            $http.delete(baseUrl + '/cart/deleteproducts/products/'+products+'/shoppinglist/'+shoppinglist).success(success).error(error);
         },
         getAllCartOfShoppingList:function(shoppinglist, success, error){
             $http.get(baseUrl + '/cart/shoppinglist/'+shoppinglist).success(success).error(error);
@@ -107,6 +113,9 @@ angular.module('services',[])
         },
         getAllProducts: function(success, error) {
             $http.get(baseUrl + '/products').success(success).error(error);
+        },
+        getAllProductsNotHaveCart: function(success, error) {
+            $http.get(baseUrl + '/products/not-have-cart/shoppinglist').success(success).error(error);
         },
         save: function(object,success, error) {
             $http.post(baseUrl + '/products',object).success(success).error(error);

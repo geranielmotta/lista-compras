@@ -33,12 +33,11 @@ class ShoppingList {
 
         $request = \Slim\Slim::getInstance()->request();
         $shoppingList = json_decode($request->getBody());
-        $sql = "INSERT INTO shoppinglist( date, user) VALUES (:date, :user)";
+        $sql = "INSERT INTO shoppinglist(user) VALUES ( :user)";
 
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":date",     $shoppingList->date,     PDO::PARAM_STR);
             $stmt->bindParam(":user",     $shoppingList->user,     PDO::PARAM_STR);
             $stmt->execute();
             $shoppingList->id = $db->lastInsertId();
@@ -48,7 +47,52 @@ class ShoppingList {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
+    
 
+/**
+ * @api {PUT} /shoppingList/:id updateshoppingList
+ * @apiVersion 1.0.0
+ * @apiName updateshoppingList
+ * @apiGroup shoppingList
+ * @apiPermission Root Admin
+ *
+ * @apiDescription Esta função atualiza um registro
+ * 
+ * @apiParam {string} name Nome da categoria
+ * @apiParam {int} id Id a ser atualizado
+ * 
+ *
+ * @apiSuccess {boolean } type  Retorna verdadeiro se atualizou
+ * @apiSuccess {object[] } shoppingList Retorna um objeto com os valores atualizados
+ * 
+ * @apiError {boolean}type  false caso ocorra um erro.
+ * @apiError {string} data  Mensagem de erro.
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *   {"type": true,"shoppingList": {"id":"1","name":"Feijão","value":"2.5","category":"1"}}
+ * @apiErrorExample {json} Error-Response:
+ *      
+ *     {"type": false,"data": "error"}
+ * 
+ * @apiSampleRequest off
+ * 
+ */
+public function updateshoppingList($id) {
+    $request = \Slim\Slim::getInstance()->request();
+    $shoppinglist = json_decode($request->getBody());
+    $sql = "UPDATE shoppinglist SET spending=:spending WHERE id=:id";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":spending", strval($shoppinglist->spending), PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $db = null;
+        echo '{"type":true, "shoppinglist":' . json_encode($shoppinglist) . '}';
+    } catch (PDOException $e) {
+        echo '{"type":false, "data":"' . $e->getMessage() . '"}';
+    }
+} 
 /**
  * @api {DELETE} /shoppinglist/:id deleteShoppingList
  * @apiVersion 1.0.0
@@ -176,5 +220,6 @@ class ShoppingList {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
+
 }
 ?>

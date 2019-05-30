@@ -38,8 +38,8 @@ class Cart {
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":products",     $cart->products,     PDO::PARAM_STR);
-            $stmt->bindParam(":shoppinglist",     $cart->shoppinglist,     PDO::PARAM_STR);
+            $stmt->bindParam(":products",     $cart->products,     PDO::PARAM_INT);
+            $stmt->bindParam(":shoppinglist",     $cart->shoppinglist,     PDO::PARAM_INT);
             $stmt->execute();
             $cart->id = $db->lastInsertId();
             $db = null;
@@ -48,7 +48,52 @@ class Cart {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
+/**
+ * @api {PUT} /cart/producer/:id updateCart
+ * @apiVersion 1.0.0
+ * @apiName updateCart
+ * @apiGroup Cart
+ * @apiPermission Root
+ *
+ * @apiDescription Esta função atualiza um registro
+ * 
+ * @apiParam {string} name Nome da categoria
+ * @apiParam {int} id Id a ser atualizado
+ * 
+ *
+ * @apiSuccess {boolean } type  Retorna verdadeiro se atualizou
+ * @apiSuccess {object[] } Cart Retorna um objeto com os valores atualizados
+ * 
+ * @apiError {boolean}type  false caso ocorra um erro.
+ * @apiError {string} data  Mensagem de erro.
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *   {"type": true,"Cart": {"id":"1","name":"Grãos"}}
+ * @apiErrorExample {json} Error-Response:
+ *      
+ *     {"type": false,"data": "error"}
+ * 
+ * @apiSampleRequest off
+ * 
+ */
+public function updateCart($products) {
+    $request = \Slim\Slim::getInstance()->request();
+    $cart = json_decode($request->getBody());
+    $sql = "UPDATE cart SET amount=:amount WHERE products=:products AND shoppinglist=:shoppinglist";
+    try {
+        $db = getConnection();
+        $stmt = $db->prepare($sql);
 
+        $stmt->bindParam(":amount", $cart->amount, PDO::PARAM_INT);
+        $stmt->bindParam(":products", $products, PDO::PARAM_INT);
+        $stmt->bindParam(":shoppinglist", $cart->shoppinglist, PDO::PARAM_INT);
+        $stmt->execute();
+        $db = null;
+        echo '{"type":true, "cart":' . json_encode($cart) . '}';
+    } catch (PDOException $e) {
+        echo '{"type":false, "data":"' . $e->getMessage() . '"}';
+    }
+}   
 /**
  * @api {DELETE} /cart/:id deleteCart
  * @apiVersion 1.0.0
@@ -71,13 +116,13 @@ class Cart {
  * @apiSampleRequest off
  * 
  */
-    public function deleteProductsInCart($id) {
-
-        $sql = "DELETE FROM List WHERE id=:id";
+    public function deleteProductsInCart($products,$shoppinglist) {
+        $sql = "DELETE FROM cart WHERE products=:products AND shoppinglist=:shoppinglist";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":products",     $products);
+            $stmt->bindParam(":shoppinglist", $shoppinglist);
             $stmt->execute();
             $db = null;
         } catch (PDOException $e) {
@@ -110,7 +155,7 @@ class Cart {
  * 
  */
     public function getAllCartOfShoppingList($shoppinglist) {
-        $sql = "SELECT s.id as shoppinglist, p.id as products, p.price, p.description, cat.description as category
+        $sql = "SELECT s.id as shoppinglist, p.id as products, p.price, p.description, c.amount, ROUND(p.price * c.amount,2) as amountProd,  cat.description as category,s.spending
                 FROM cart c
                 INNER JOIN products p ON p.id = c.products
                 INNER JOIN category cat ON cat.id = p.category

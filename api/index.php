@@ -53,14 +53,18 @@ $app->get('/user', array('User','getAllUser'));
 
 //ShoppingList
 $app->post('/shoppinglist', array('ShoppingList','newShoppingList'));
+$app->put('/shoppinglist/:id', array('ShoppingList','updateshoppingList'));
 $app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
 $app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
 $app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingListOfUser'));
 
+
 //Cart
-$app->post('/cart/addproducts', array('Cart','addProductsInCart'));
-$app->delete('/cart/deleteproducts/:id', array('Cart','deleteProductsInCart'));
+$app->post('/cart/add-products', array('Cart','addProductsInCart'));
+$app->delete('/cart/deleteproducts/products/:products/shoppinglist/:shoppinglist', array('Cart','deleteProductsInCart'));
 $app->get('/cart/shoppinglist/:id', array('Cart','getAllCartOfShoppingList'));
+$app->put('/cart/producer/:id', array('Cart','updateCart'));
+
 
 //Category
 $app->post('/category', array('Category','newCategory'));
@@ -75,6 +79,7 @@ $app->put('/products/:id', array('Products','updateProducts'));
 $app->delete('/products/:id', array('Products','deleteProducts'));
 $app->get('/products/:id', array('Products','getOneProducts'));
 $app->get('/products', array('Products','getAllProducts'));
+$app->get('/products/not-have-cart/shoppinglist', array('Products','getAllProductsNotHaveCart'));
 
 /**
  * @api {POST} /login 

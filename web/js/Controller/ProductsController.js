@@ -47,10 +47,14 @@ angular.module('productsControllers', [])
     };
 
 })
-.controller('ProductsCreateController',function($scope,$state,Products,Category,ngDialog){
-    $scope.hideBotton = true;
+.controller('ProductsCreateController',function($scope,$state,$localStorage,Products,Category,ngDialog){
+    $scope.hide = false;
     $scope.products = {};
     $scope.category = {};
+
+    if($localStorage.access_levels == '1000'){
+        $scope.hide = true;
+    }
 
     Category.getAllCategory(function(res){
         $scope.category = res.category;

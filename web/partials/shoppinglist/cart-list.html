@@ -7,10 +7,11 @@
             </li>
         </ul>
     </div>
-<div class="container">
+
     <div class="card shopping-cart">
-            aaaaaaa
-    </div>    
+            <a href="#/web/home" class=" btn btn-sm btn-default" >Voltar</a>      <button ng-click="addProductFromCart()" class="btn btn-primary btn-sm ">Adicionar produto</button> 
+    </div>   
+    <hr>
     <div class="card-body">
         <!-- PRODUCT -->
         <div ng-repeat=" list in cart">
@@ -19,17 +20,19 @@
                     <h4 class="product-name"><strong>{{list.description}}</strong></h4>
                 </div>
                 <div class="col-12 col-sm-12 text-sm-center col-md-4 text-center row">
-                    <div class="col-5 col-sm-5 col-md-5 text-center" style="padding-top: 5px">
-                        <h4><strong>R$ {{list.price}} <span class="text-muted">x</span></strong></h4>
+                    <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+                        <h4><strong>{{ list.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}} <span class="text-muted">x</span></strong></h4>
                     </div>
-                    <div class="col-5 col-sm-5 col-md-5">
-                        <div class="quantity">
-                            <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
-                                size="4">
+        
+                    <div class="col-4 col-sm-4 col-md-4">
+                        <div class=" col-sm-4 quantity">
+                            <a class="col-2 col-sm-2 col-md-2 btn-sm plus" ng-click="incrementAmount({list: list})"><i class=" fa fa-plus"></i></a>
+                            <input type="text"  ng-model="list.amount"  readonly title="Qty" class="qty">
+                            <a class="col-2 col-sm-2 col-md-2 btn btn-sm minus" ng-click="decrementAmount({list: list})"><i class=" fa fa-minus"></i></a>
                         </div>
                     </div>
                     <div class="col-2 col-sm-2 col-md-2 text-right">
-                        <button type="button" class="btn btn-danger ">
+                        <button type="button" class="btn btn-danger " ng-click="removeProducts({list: list})">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -41,6 +44,5 @@
         <div class="card-footer">
             Total : <b>{{amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</b>  
         </div>
-     </div> 
-    </div>      
+     </div>    
 </div>

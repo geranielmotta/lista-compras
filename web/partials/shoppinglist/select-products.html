@@ -3,10 +3,10 @@
             <div>
     <ul class="breadcrumb">
         <li>
-            <a href="#/web/home">Home</a>
+            <a href="#/web/home">Lista</a>
         </li>
         <li>
-            <a href="#">Lista de produtos</a>
+            <a href="#">Selecione produtos para o carrinho</a>
         </li>
     </ul>
 </div>
@@ -28,7 +28,7 @@
                         <th>Descrição</th>
                         <th>Preço</th>
                         <th>Categoria</th>
-                        <th ng-show="hide">Opções</th>
+                        <th>Opções</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,19 +37,14 @@
                         <td>{{products.description}}</td>
                         <td>{{products.price}}</td>
                         <td>{{products.category}}</td>
-                        <td ng-show="hide"> 
-                            <button class="btn btn-primary btn-mini" ng-click="updateProducts({id: products.id})"><i class="fa fa-edit" ></i>Editar</button> 
-                            <button class="btn btn-danger btn-mini" ng-click="deleteProducts({products: products})"><i class="fa fa-trash" ></i>Delete</button>
-                        </td>
+                        <td> <button class="btn btn-primary btn-mini" ng-click="addProductFromCart({id: products.id})"><i class="fa fa-plus" ></i>Add</button> 
                     </tr>
 
                 </tbody>
             </table>
         </div>
         <!-- /.table-responsive -->
-        <div class="panel panel-footer">
-            <a  class="btn btn-success " ng-click="createProducts()"> Cadastrar <i class="fa fa-plus"></i> </a>
-    </div>
+
     <!-- /.panel-body -->
 </div>
 <!-- /.panel -->
