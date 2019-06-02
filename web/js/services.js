@@ -127,4 +127,16 @@ angular.module('services',[])
             $http.delete(baseUrl + '/products/'+id).success(success).error(error);
         }
     };
-}])    
+}])   
+
+.factory('Report', ['$http', function($http){
+    return {
+        getMostPurchasedProducts: function(success, error) {
+            $http.get(baseUrl + '/report/most-purchased-products').success(success).error(error);
+        },
+        getUsersWhoSpentMore: function(success, error) {
+            $http.get(baseUrl + '/report/users-who-spent-more').success(success).error(error);
+        }
+        
+    };
+}])  

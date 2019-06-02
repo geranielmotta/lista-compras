@@ -9,6 +9,7 @@ require 'Models/ShoppingList.php';
 require 'Models/Category.php';
 require 'Models/Products.php';
 require 'Models/Cart.php';
+require 'Models/Report.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -22,18 +23,13 @@ $app->add($cors);
 
 //public routes
 $app->hook('slim.before.dispatch', function () use ($app) {
-    
-    $publicRoutes = array('/login');
-
+    $publicRoutes = array('/login','/user');
     if(!in_array($app->router()->getCurrentRoute()->getPattern(), $publicRoutes)){ 
-        
         $token = validateToken();
-
         if($token['type'] == FALSE){
             $app->halt(401);
         }
-    }
-    
+    } 
 });
 
 $app->post('/login', 'login');
@@ -42,7 +38,6 @@ $app->post('/login', 'login');
 $app->get('/accesslevels/:id', array('AccessLevels','getOneAccessLevels'));
 $app->get('/accesslevels',     array('AccessLevels','getAllAccessLevels'));
 $app->get('/accesslevelsnotroot',     array('AccessLevels','getAllAccessLevelsNotRoot'));
-
 
 //User
 $app->post('/user', array('User','newUser'));
@@ -58,13 +53,11 @@ $app->delete('/shoppinglist/:id', array('ShoppingList','deleteShoppingList'));
 $app->get('/shoppinglist/:id', array('ShoppingList','getOneShoppingList'));
 $app->get('/shoppinglist/user/:user', array('ShoppingList','getAllShoppingListOfUser'));
 
-
 //Cart
 $app->post('/cart/add-products', array('Cart','addProductsInCart'));
 $app->delete('/cart/deleteproducts/products/:products/shoppinglist/:shoppinglist', array('Cart','deleteProductsInCart'));
 $app->get('/cart/shoppinglist/:id', array('Cart','getAllCartOfShoppingList'));
 $app->put('/cart/producer/:id', array('Cart','updateCart'));
-
 
 //Category
 $app->post('/category', array('Category','newCategory'));
@@ -80,6 +73,11 @@ $app->delete('/products/:id', array('Products','deleteProducts'));
 $app->get('/products/:id', array('Products','getOneProducts'));
 $app->get('/products', array('Products','getAllProducts'));
 $app->get('/products/not-have-cart/shoppinglist', array('Products','getAllProductsNotHaveCart'));
+
+//Report
+$app->get('/report/most-purchased-products', array('Report','getMostPurchasedProducts'));
+$app->get('/report/users-who-spent-more', array('Report','getUsersWhoSpentMore'));
+
 
 /**
  * @api {POST} /login 
@@ -108,17 +106,11 @@ $app->get('/products/not-have-cart/shoppinglist', array('Products','getAllProduc
  * @apiSampleRequest off
  * 
  */
-
-
 function login(){
-    
     $request = \Slim\Slim::getInstance()->request();
 	$login = json_decode($request->getBody());
-        
         $sql = "SELECT u.id, u.name, u.token, al.code AS access_levels FROM user u INNER JOIN access_levels al ON al.id=u.access_levels  WHERE u.email = :email AND u.password = :password";	
-        
         if((isset($login->password)) && (isset($login->email))){
-            
             try {
                 $senha = md5($login->password);
                 $db = getConnection();
@@ -142,40 +134,29 @@ function login(){
                 } else {
                     echo '{"type":false,"data":"Incorrect email/password"}';    
                 }
-
             } catch(PDOException $e) {
                 echo '{"type":false,"data":"'.$e->getMessage().'"}'; 
             }
         }else{
             $app = \Slim\Slim::getInstance();
             $app->halt(406);
-        }
-        
+        }     
 }
 
 function validateToken(){
-    
-    $isset = apache_request_headers();
-        
+    $isset = apache_request_headers();   
     if(isset($isset["Authorization"])){
-
         $head = $isset["Authorization"];//apache_request_headers()["Authorization"];
-    
         $token = explode(" ", $head);
-
         $token = $token[1];
-
         //print_r($head);
-
         $sql = "SELECT name, token FROM user WHERE token = :token;";    
-
         $db = getConnection();
         $stmt = $db->prepare($sql); 
         $stmt->bindParam(':token', $token, PDO::PARAM_STR);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_OBJ);
         $db = null;
-
         if($user) {
             $return = array("type" => TRUE, "data" => $user->name, "token" => $user->token);
         } else {
@@ -184,13 +165,11 @@ function validateToken(){
     }else{
         $return = array("type" => FALSE, "data" => "No Token", "token"=> NULL);
     }
-    
     return $return;
 }
 
 function getConnection() {
 	$dbhost="127.0.0.1";
-    
 	$dbuser="root";
 	$dbpass="";
     $dbname="lista-compras";
@@ -201,5 +180,4 @@ function getConnection() {
 }
 
 $app->run();
-
 ?>

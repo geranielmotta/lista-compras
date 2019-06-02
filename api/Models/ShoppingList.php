@@ -202,12 +202,9 @@ public function updateshoppingList($id) {
  * 
  */
     public function getAllShoppingListOfUser($user) {
-        $sql = "SELECT l.id, ROUND(SUM(p.price), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
-                    FROM shoppinglist l 
-                    INNER JOIN cart c ON c.shoppinglist = l.id
-                    INNER JOIN products p ON p.id = c.products
-                    INNER JOIN user u ON u.id = l.user    
-                    WHERE u.id=:user ORDER BY l.id DESC";
+        $sql = "SELECT l.*,(select COUNT(c.products) from cart c where c.shoppinglist = l.id) AS amount
+                FROM shoppinglist l 
+                WHERE l.user=:user ORDER BY l.id DESC";
         try {
             $db = getConnection();
             $stmt = $db->prepare($sql);
@@ -215,6 +212,7 @@ public function updateshoppingList($id) {
             $stmt->execute();
             $shoppingList = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
+        
             echo '{"type":true, "shoppinglist":' . json_encode($shoppingList) . '}';
         } catch (PDOException $e) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';

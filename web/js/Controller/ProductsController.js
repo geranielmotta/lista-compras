@@ -1,11 +1,15 @@
 angular.module('productsControllers', [])
 
-.controller('ProductsListController', function($scope,$state,Products,ngDialog){
+.controller('ProductsListController', function($scope,$state,$localStorage,Products,ngDialog){
     $scope.products = {};
+    $scope.hide = false;
 
     Products.getAllProducts(function(res){
         $scope.products = res.products;
-        console.log('products '+res.type);
+        if($localStorage.access_levels > 100){
+            $scope.hide = true;
+        }
+
     },function(res){
         ngDialog.open({
             template: '<p class="alert alert-danger"> <i class="fa fa-2x fa-danger"></i> Perdemos a conexão com servidor, tente novamente em breve</p>',
@@ -61,6 +65,8 @@ angular.module('productsControllers', [])
     });
 
     $scope.createProducts = function () {
+        $scope.products.price = $scope.products.price.replace(',','.');
+
         Products.save($scope.products, function (res) {
                 if(!res.type){
                     ngDialog.open({

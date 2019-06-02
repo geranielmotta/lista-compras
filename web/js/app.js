@@ -10,8 +10,10 @@ angular.module('app',['ui.router',
                       'cartControllers',
                       'accessLevelsControllers',
                       'homeControllers',
+                      'reportControllers',
                       'services',
                       'directives',
+                      'filter',
                       'ngStorage',
                       'ngAnimate',
                       'ngDialog',
@@ -170,6 +172,16 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
     'dashboard': {
       templateUrl:'partials/products/products-update.html',
       controller:'ProductsUpdateController'
+    }
+  }
+})
+
+.state('web.report',{
+  url:'/report',
+  views: {
+    'dashboard': {
+      templateUrl:'partials/report/report.html',
+      controller:'ReportController'
     }
   }
 })

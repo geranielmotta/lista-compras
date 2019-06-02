@@ -48,7 +48,11 @@ class User {
             $stmt->bindParam(":name", $user->name, PDO::PARAM_STR);
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);
+            if(empty($user->access_levels)){
+                $user->access_levels = 4;
+            }
             $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_STR);
+            
             $stmt->execute();
             $user->id = $db->lastInsertId();
             $db = null;
@@ -90,7 +94,6 @@ class User {
  * @apiSampleRequest off
  * 
  */
-
     public function updateUser($id) {
         $request = \Slim\Slim::getInstance()->request();
         $user = json_decode($request->getBody());

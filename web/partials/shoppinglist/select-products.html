@@ -35,9 +35,9 @@
                     <tr ng-repeat=" products in products| filter:filter ">
                         <td>#</td>
                         <td>{{products.description}}</td>
-                        <td>{{products.price}}</td>
+                        <td>{{products.price | moeda}}</td>
                         <td>{{products.category}}</td>
-                        <td> <button class="btn btn-primary btn-mini" ng-click="addProductFromCart({id: products.id})"><i class="fa fa-plus" ></i>Add</button> 
+                        <td> <button class="btn btn-primary btn-mini" ng-click="addProductFromCart({products: products})"><i class="fa fa-plus" ></i>Add</button> 
                     </tr>
 
                 </tbody>

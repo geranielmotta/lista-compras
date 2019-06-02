@@ -22,18 +22,18 @@
                 <th>#</th>
                 <th class="text-center">Data</th>
                 <th class="text-center">Quantidade</th>
-                <th class="text-center">Valor</th>
+                <th class="text-center">Total</th>
                 <th class="text-center">Opções</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat=" list in shoppinglists | filter:filter ">
                 <td>#</td>
-                <td class="text-center">{{list.date}}</td>
+                <td class="text-center">{{list.date | dateBR | date:"dd/MM/yyyy HH:mm"}}</td>
                 <td class="text-center">{{list.amount}}</td>
-                <td class="text-center">{{list.spending}}</td>
+                <td class="text-center">{{list.spending | moeda}}</td>
                 <td class="text-center"> <button class="btn btn-primary btn-mini" ng-click="addProductFromCart({id: list.id})"><i class="fa fas fa-shopping-cart"></i> </button> 
-                    <button class="btn btn-danger btn-mini" ng-click="deleteShoppingList({list: list})"><i class="fa fa-trash" ></i></button></td>
+                    <button class="btn btn-danger btn-mini" ng-click="deleteShoppingList({id: list.id})"><i class="fa fa-trash" ></i></button></td>
             </tr>
 
         </tbody>

@@ -117,7 +117,6 @@ angular.module('userControllers', [])
                         className: 'ngdialog-theme-default'
                     });
                 });
-
             }
         };
     })

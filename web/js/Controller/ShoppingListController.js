@@ -4,17 +4,19 @@ angular.module('shoppingListControllers', [])
     $scope.cart = {};
     $scope.amount = 0;
     $scope.amountCart = 0;
-    
-
 
     Cart.getAllCartOfShoppingList($stateParams.id,function(res){
         $scope.cart = res.cart;
-        $scope.amountCart = res.cart[0].spending;
-        $scope.amount = parseFloat($scope.amountCart);
-        for (var i = 0; i < res.cart.length; i++) {
-            $scope.cart[i].price = parseFloat($scope.cart[i].price);
+        if(res.cart.length > 0){
+            $scope.amountCart = res.cart[0].spending;
+            $scope.amount = parseFloat($scope.amountCart);
+                for (var i = 0; i < res.cart.length; i++) {
+                    $scope.cart[i].price = parseFloat($scope.cart[i].price);
+                }
+        }else{
+            $scope.amountCart = 0;
+            $scope.amount = 0;
         }
-        console.log($scope.cart)
     }, function () {
         ngDialog.open({
             template: 'partials/notification/error/erro-update.html',
@@ -29,7 +31,6 @@ angular.module('shoppingListControllers', [])
         ShoppingList.updateShoppingList($stateParams.id, data, function (res){
             if(res.type){
                 data = { amount : list.list.amount, shoppinglist: $stateParams.id};
-                console.log(list.list.products);
                 Cart.updateCart(list.list.products, data, function (res){
                     if(res.type){
                         $state.go($state.current, {}, { reload: true });
@@ -41,11 +42,8 @@ angular.module('shoppingListControllers', [])
     };
 
     $scope.decrementAmount = function (list){
-        console.log(parseInt(list.list.amount));
-        if(parseInt(list.list.amount) > parseInt(0)){
             list.list.amount--;
             $scope.amountCart = parseFloat($scope.amountCart) - parseFloat(list.list.price);
-            console.log(parseFloat(list.list.price));
             var data = { spending:$scope.amountCart ,};
             ShoppingList.updateShoppingList($stateParams.id, data, function (res){
                 if(res.type){
@@ -55,9 +53,6 @@ angular.module('shoppingListControllers', [])
                     });
                 }
             });
-        }else{
-            $scope.removeProducts();
-        }
     };
 
     $scope.addProductFromCart = function () {
@@ -65,26 +60,27 @@ angular.module('shoppingListControllers', [])
     }
 
     $scope.removeProducts = function (list){
+        var amount = list.list.amount;
         ngDialog.openConfirm({
             template: 'partials/notification/delete/delete-confirmed.html',
             className: 'ngdialog-theme-default'
         })
             .then(function () {
+                
+                for (var i = 0; i < amount; i++) {
+                        $scope.decrementAmount(list);
+                        console.log(i);
+                }
+                
                 Cart.remove(list.list.products,$stateParams.id,function(){
                     $state.go($state.current, {}, { reload: true });
-                }, function () {
-                    ngDialog.open({
-                        template: 'partials/notification/delete/delete-fail.html',
-                        className: 'ngdialog-theme-default'
-                    });    
-                });
+               });
             });        
     }
 })
 
-.controller('ShoppingListSelectProductsController',function($scope, $state, $stateParams,Cart,Products,ngDialog){
+.controller('ShoppingListSelectProductsController',function($scope, $state, $stateParams,Cart,Products,ShoppingList,ngDialog){
     $scope.cart = {};
-
     Products.getAllProductsNotHaveCart(function(res){
         $scope.products = res.products;
     },function(res){
@@ -95,15 +91,22 @@ angular.module('shoppingListControllers', [])
         });
     });
 
-    $scope.addProductFromCart = function(products){
-        var cart = {
-            products: products.id,
-            shoppinglist: $stateParams.id
-        };
-
-        Cart.addProducts(cart,function(){
-            $state.go('web.shoppinglist-add', { 'id': $stateParams.id });
-        });
+    $scope.addProductFromCart = function(item){
+        var data = { spending :  item.products.price , shoppinglist: $stateParams.id};
+        var cart = {products: item.products.id,shoppinglist: $stateParams.id};
+        Cart.getAllCartOfShoppingList($stateParams.id,function(res){
+            if(res.type && res.cart.length > 0){
+                data.spending = parseFloat(res.cart[0].spending) + parseFloat(item.products.price);
+            }
+            Cart.addProducts(cart,function(res){
+                if(res.type){
+                    ShoppingList.updateShoppingList($stateParams.id, data, function (res){
+                        if(res.type){
+                            $state.go('web.shoppinglist-add', { 'id': $stateParams.id });
+                        }
+                    })
+                }
+            });
+        })
     }
-
 })
