@@ -57,7 +57,7 @@ class Report {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"Report": {"id":"1","username":"geranielmotta","name":"Geraniel Motta","phone":"+55541554448","email":"geraniel.motta@gmail.com","spending ":"200.60"}}
+ *   {"type": true,"Report": {"id":"1","username":"geranielmotta","date":"01/06/2019 22:06","email":"geraniel.motta@gmail.com","spending ":"200.60"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}

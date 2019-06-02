@@ -36,11 +36,11 @@
                     <tr ng-repeat=" user in users| filter:filter ">
                         <td>#</td>
                         <td>{{user.name}}</td>
-                        <td>{{user.phone}}</td>
+                        <td>{{user.phone }}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.access_levels}}</td>
-                        <td> <button ng-if="user.access_levels != 'Root'" class="btn btn-primary btn-mini" ng-click="updateUser({id: user.id})"><i class="fa fa-edit" translate="button.edit"></i></button> 
-                            <button  ng-if="user.access_levels != 'Root'" class="btn btn-danger btn-mini" ng-click="deleteUser({user: user})"><i class="fa fa-trash" translate="button.delete"></i></button></td>
+                        <td> <button ng-if="user.access_levels != 'Root'" class="btn btn-primary btn-mini" ng-click="updateUser({id: user.id})"><i class="fa fa-edit"></i></button> 
+                            <button  ng-if="user.access_levels != 'Root'" class="btn btn-danger btn-mini" ng-click="deleteUser({user: user})"><i class="fa fa-trash"></i></button></td>
                     </tr>
 
                 </tbody>

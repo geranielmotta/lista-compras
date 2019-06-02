@@ -37,7 +37,7 @@
                                         <tr ng-repeat=" prod in products">
                                             <td>#</td>
                                             <td>{{prod.description}}</td>
-                                            <td>{{prod.price | moeda}}</td>
+                                            <td>{{prod.price}}</td>
                                             <td>{{prod.category}}</td>
                                             <td>{{prod.amount}}</td>
                                         </tr>
@@ -55,10 +55,11 @@
                                            ],
                                            type: 'json',
                                            style: '.custom-h3 { text-align : center }                       '
-                                          })" > Gerar PDF</button>
+                                          })" > <i class="fa fa-file-pdf-o fa-fw"></i>  Gerar PDF</button>
                                       </div>
+                                      <hr>
+                                      <br>
                                 </li>
-                           
                                 <li class="list-group-item">
                                 <h4>Lista dos usuários que gastaram mais </h4>
                                 <table class="table table-striped">
@@ -77,7 +78,7 @@
                                                 <td>{{user.name}}</td>
                                                 <td>{{user.email}}</td>
                                                 <td>{{user.date | dateBR | date:"dd/MM/yyyy HH:mm"}}</td>
-                                                <td>{{user.spending | moeda}}</td>
+                                                <td>{{user.spending }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -98,7 +99,7 @@
                    ],
                    type: 'json',
                    style: '.custom-h3 { text-align : center }                       '
-                  })" > Gerar PDF</button>
+                  })" ><i class="fa fa-file-pdf-o fa-fw"></i>  Gerar PDF</button>
               </div>
               
 </div>

@@ -35,11 +35,11 @@
                     <tr ng-repeat=" products in products| filter:filter ">
                         <td>#</td>
                         <td>{{products.description}}</td>
-                        <td>{{products.price | moeda}}</td>
+                        <td>{{products.price | coin}}</td>
                         <td>{{products.category}}</td>
                         <td ng-show="hide"> 
-                            <button class="btn btn-primary btn-mini" ng-click="updateProducts({id: products.id})"><i class="fa fa-edit" ></i>Editar</button> 
-                            <button class="btn btn-danger btn-mini" ng-click="deleteProducts({products: products})"><i class="fa fa-trash" ></i>Delete</button>
+                            <button class="btn btn-primary btn-mini" ng-click="updateProducts({id: products.id})"><i class="fa fa-edit" ></i></button> 
+                            <button class="btn btn-danger btn-mini" ng-click="deleteProducts({products: products})"><i class="fa fa-trash" ></i></button>
                         </td>
                     </tr>
 

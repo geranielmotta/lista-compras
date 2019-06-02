@@ -42,6 +42,7 @@ angular.module('shoppingListControllers', [])
     };
 
     $scope.decrementAmount = function (list){
+        if(list.list.amount > 0){
             list.list.amount--;
             $scope.amountCart = parseFloat($scope.amountCart) - parseFloat(list.list.price);
             var data = { spending:$scope.amountCart ,};
@@ -53,6 +54,9 @@ angular.module('shoppingListControllers', [])
                     });
                 }
             });
+        }else{
+            $scope.removeProducts(list);
+        }
     };
 
     $scope.addProductFromCart = function () {

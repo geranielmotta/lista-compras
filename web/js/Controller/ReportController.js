@@ -10,25 +10,21 @@ angular.module('reportControllers', [])
 
     Report.getMostPurchasedProducts(function(res){
         $scope.products = res.productsreport;
-        for(var i=0;i< $scope.users.length;i++){    
-            $scope.products[i].price = $filter('moeda')($scope.products[i].price);
-            jSonProducts.push($scope.products[i]);
+        for(var i=0;i< res.productsreport.length;i++){    
+            res.productsreport[i].price = $filter('coin')(res.productsreport[i].price);
+            jSonProducts.push(res.productsreport[i]);
         }
+        console.log('rtes');
+        console.log($scope.products);
     });
 
     Report.getUsersWhoSpentMore(function(response){
         $scope.users = response.usersreport;
-
-        for(var i=0;i< $scope.users.length;i++){    
-            $scope.users[i].date =  $filter('date')(new Date($scope.users[i].date),'dd/MM/yyyy HH:mm');
-            $scope.users[i].spending = $filter('moeda')($scope.users[i].spending);
-            jSonUser.push($scope.users[i]);
+        for(var i=0;i< response.usersreport.length ;i++){    
+            response.usersreport[i].date =  $filter('date')(new Date(response.usersreport[i].date),'dd/MM/yyyy HH:mm');
+            response.usersreport[i].spending = $filter('coin')(response.usersreport[i].spending);
+            jSonUser.push(response.usersreport[i]);
         }
+        console.log($scope.users);
     });
-
-
-    $scope.generatePDF = function(){
-
-    };
-      
 })

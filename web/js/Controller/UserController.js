@@ -131,7 +131,7 @@ angular.module('userControllers', [])
             $scope.user = res.user;
             valueAccess = $scope.user.access_levels;
 
-            if ($localStorage.access_levels == 100) {
+            if ($localStorage.access_levels >= 100) {
                 $scope.hideBotton = false;
                 AcessLevels.getAccessLevelsNotRoot(function (res) {
                     $scope.access = res.access_levels;
@@ -161,7 +161,7 @@ angular.module('userControllers', [])
         });
 
         $scope.updateUser = function () {
-            if ($localStorage.access_levels == 1000) {
+            if ($localStorage.access_levels >= 100) {
                 if ($scope.user.access_levels == null) {
                     ngDialog.open({
                         template: '<p class="alert alert-info"> <i class="fa fa-2x fa-warning"></i>Selecione uma nivel de acesso</p>',
@@ -169,7 +169,10 @@ angular.module('userControllers', [])
                         plain: true
                     });
                 } else {
-                    User.update($stateParams.id, $scope.user, function () {
+                    console.log($stateParams.id);
+                    console.log($scope.user);
+                    User.update($stateParams.id, $scope.user, function (res) {
+                        
                         ngDialog.open({
                             template: 'partials/notification/update/update-confirmed.html',
                             className: 'ngdialog-theme-default'
@@ -177,13 +180,14 @@ angular.module('userControllers', [])
                         $state.go('web.user');
                     }, function () {
                         ngDialog.open({
-                            template: 'partials/notification/error/erro-update.html',
+                            template: 'partials/notification/error/error-update.html',
                             className: 'ngdialog-theme-default'
                         });
                     });
                 }
             } else {
-                User.update($stateParams.id, $scope.user, function () {
+                User.update($stateParams.id, $scope.user, function (res) {
+                    console.log(res);
                     ngDialog.open({
                         template: 'partials/notification/update/update-confirmed.html',
                         className: 'ngdialog-theme-default'
@@ -191,7 +195,7 @@ angular.module('userControllers', [])
                     $state.go('web.user');
                 }, function () {
                     ngDialog.open({
-                        template: 'partials/notification/error/erro-update.html',
+                        template: 'partials/notification/error/error-update.html',
                         className: 'ngdialog-theme-default'
                     });
                 });

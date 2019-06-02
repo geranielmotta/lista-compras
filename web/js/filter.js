@@ -6,7 +6,7 @@ angular.module('filter',[])
         return Date.parse(o); 
     };
 })
-.filter('moeda', function () {
+.filter('coin', function () {
         return function (amount) {
             var n = amount,
             c = 2,
@@ -18,9 +18,3 @@ angular.module('filter',[])
             return 'R$ ' + s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
         }
 })
-
-.filter("asDate", function () {
-    return function (input) {
-        return new Date(input);
-    }
-});

@@ -137,6 +137,5 @@ angular.module('services',[])
         getUsersWhoSpentMore: function(success, error) {
             $http.get(baseUrl + '/report/users-who-spent-more').success(success).error(error);
         }
-        
     };
 }])  

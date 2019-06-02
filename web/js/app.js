@@ -20,7 +20,8 @@ angular.module('app',['ui.router',
                       'ng.confirmField',
                       'checklist-model',
                       'ui.bootstrap',
-                      'angular-loading-bar'
+                      'angular-loading-bar',
+                      'ngMask'
                     ]
                 );
 
@@ -124,6 +125,16 @@ angular.module('app').config(function($stateProvider, $urlRouterProvider, $httpP
         controller:'ShoppingListSelectProductsController'
       }
     }
+})
+
+.state('web.category-list',{
+  url:'/category',
+  views: {
+    'dashboard': {
+      templateUrl:'partials/category/category-list.html',
+      controller:'CategoryListController'
+    }
+  }
 })
 
 .state('web.category-create',{

@@ -27,7 +27,7 @@
 
     <div class="form-group" ng-class="{ 'has-error' : userForm.phone.$invalid && !userForm.phone.$pristine }">
       <label>Telefone</label>
-      <input type="tel" name="phone" placeholder="Telefone" class="form-control" ng-model="user.phone" >
+      <input type="tel" name="phone" mask="(99) 9?9999-9999" placeholder="Telefone" class="form-control" ng-model="user.phone" >
       <p ng-show="userForm.phone.$invalid && !userForm.phone.$pristine" class="help-block">Informe telefone</p>
     </div>
 
