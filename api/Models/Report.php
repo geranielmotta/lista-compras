@@ -22,7 +22,8 @@ class Report {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest off
+ * @apiSampleRequest http://api.lista-compras.com/report/most-purchased-products
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getMostPurchasedProducts() {
@@ -62,8 +63,8 @@ class Report {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/Report  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiSampleRequest http://api.lista-compras.com/report/users-who-spent-more 
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getUsersWhoSpentMore() {

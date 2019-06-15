@@ -197,8 +197,8 @@ public function updateshoppingList($id) {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/shoppinglist  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiSampleRequest http://api.lista-compras.com/shoppinglist/user/1  
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllShoppingListOfUser($user) {
@@ -218,6 +218,5 @@ public function updateshoppingList($id) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
-
 }
 ?>

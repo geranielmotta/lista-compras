@@ -15,7 +15,7 @@ class User {
  * @apiParam {string} name Name completo do usuário
  * @apiParam {string} phone Telefone do usuário
  * @apiParam {string} email Email do usuário
- * @apiParam {string} access_levels Nivel de acesso do usuário
+ * @apiParam {int} access_levels Nivel de acesso do usuário
  * 
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se cadastrou
@@ -51,7 +51,7 @@ class User {
             if(empty($user->access_levels)){
                 $user->access_levels = 4;
             }
-            $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_STR);
+            $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_INT);
             
             $stmt->execute();
             $user->id = $db->lastInsertId();
@@ -107,7 +107,7 @@ class User {
             $stmt->bindParam(":name", $user->name, PDO::PARAM_STR);
             $stmt->bindParam(":phone", $user->phone, PDO::PARAM_STR);
             $stmt->bindParam(":email", $user->email, PDO::PARAM_STR);
-            $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_STR);
+            $stmt->bindParam(":access_levels", $user->access_levels, PDO::PARAM_INT);
             $stmt->bindParam(":id", $id, PDO::PARAM_INT);
             $stmt->execute();
             $db = null;
@@ -214,7 +214,7 @@ class User {
  *     {"type": false,"data": "error"}
  * 
  * @apiSampleRequest http://api.lista-compras.com/user  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllUser() {
@@ -230,5 +230,4 @@ class User {
         }
     }
 }
-
 ?>
