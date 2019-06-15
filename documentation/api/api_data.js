@@ -244,7 +244,7 @@ define({ "api": [
     "group": "Cart",
     "permission": [
       {
-        "name": "admin"
+        "name": "root admin user"
       }
     ],
     "description": "<p>Esta função deleta um registro</p>",
@@ -360,7 +360,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://api.lista-compras.com/Cart"
+        "url": "http://api.lista-compras.com/cart"
       }
     ],
     "header": {
@@ -372,7 +372,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -467,11 +467,6 @@ define({ "api": [
         }
       ]
     },
-    "sampleRequest": [
-      {
-        "url": "http://api.lista-compras/api/Cart"
-      }
-    ],
     "filename": "api/Models/Cart.php",
     "groupTitle": "Cart"
   },
@@ -702,7 +697,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -880,11 +875,6 @@ define({ "api": [
         }
       ]
     },
-    "sampleRequest": [
-      {
-        "url": "http://api.lista-compras/api/category"
-      }
-    ],
     "filename": "api/Models/Category.php",
     "groupTitle": "Category"
   },
@@ -1205,7 +1195,96 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+          }
+        ]
+      }
+    },
+    "filename": "api/Models/Products.php",
+    "groupTitle": "Products"
+  },
+  {
+    "type": "GET",
+    "url": "products/not-have-cart/shoppinglist",
+    "title": "getAllProductsNotHaveCart",
+    "version": "1.0.0",
+    "name": "getAllProductsNotHaveCart",
+    "group": "Products",
+    "permission": [
+      {
+        "name": "none"
+      }
+    ],
+    "description": "<p>Esta função seleciona todos os produtos que ainda não estão na lista</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se encontrou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "Object",
+            "description": "<p>Retorna um objeto com todos os valores</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"Products\": {\"id\":\"1\",\"name\":\"Feijão\",\"value\":\"4.80\",\"category\":\"Grãos\"},{\"id\":\"2\",\"name\":\"Arroz\",\"value\":\"5.80\",\"category\":\"Grãos\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "http://api.lista-compras.com/products/not-have-cart/shoppinglist"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": true,
+            "field": "Authorization",
+            "defaultValue": "bearer",
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -1383,11 +1462,6 @@ define({ "api": [
         }
       ]
     },
-    "sampleRequest": [
-      {
-        "url": "http://api.lista-compras/api/products"
-      }
-    ],
     "filename": "api/Models/Products.php",
     "groupTitle": "Products"
   },
@@ -1548,6 +1622,25 @@ define({ "api": [
         }
       ]
     },
+    "sampleRequest": [
+      {
+        "url": "http://api.lista-compras.com/report/most-purchased-products"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": true,
+            "field": "Authorization",
+            "defaultValue": "bearer",
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+          }
+        ]
+      }
+    },
     "filename": "api/Models/Report.php",
     "groupTitle": "Report"
   },
@@ -1620,7 +1713,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://api.lista-compras.com/Report"
+        "url": "http://api.lista-compras.com/report/users-who-spent-more"
       }
     ],
     "header": {
@@ -1632,7 +1725,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -1778,7 +1871,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://api.lista-compras.com/shoppinglist"
+        "url": "http://api.lista-compras.com/shoppinglist/user/1"
       }
     ],
     "header": {
@@ -1790,7 +1883,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -2113,7 +2206,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -2257,7 +2350,7 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "string",
+            "type": "int",
             "optional": false,
             "field": "access_levels",
             "description": "<p>Nivel de acesso do usuário</p>"
