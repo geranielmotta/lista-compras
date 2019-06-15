@@ -26,7 +26,7 @@ class Category {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras/api/category
+ * @apiSampleRequest off
  * 
  */
     public function newCategory() {
@@ -191,8 +191,8 @@ public function updateCategory($id) {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/category  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiSampleRequest http://api.lista-compras.com/category
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllCategory() {

@@ -26,7 +26,7 @@ class Products {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras/api/products
+ * @apiSampleRequest off
  * 
  */
     public function newProducts() {
@@ -197,7 +197,7 @@ public function updateProducts($id) {
  *     {"type": false,"data": "error"}
  * 
  * @apiSampleRequest http://api.lista-compras.com/products  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllProducts() {
@@ -215,17 +215,43 @@ public function updateProducts($id) {
             echo '{"type":false, "data":"' . $e->getMessage() . '"}';
         }
     }
-
-    public function getAllProductsNotHaveCart(){
+/**
+ * @api {GET} products/not-have-cart/shoppinglist getAllProductsNotHaveCart
+ * @apiVersion 1.0.0
+ * @apiName getAllProductsNotHaveCart
+ * @apiGroup Products
+ * @apiPermission none
+ *
+ * @apiDescription Esta função seleciona todos os produtos que ainda não estão na lista
+ *
+ * @apiSuccess {boolean } type  Retorna verdadeiro se encontrou
+ * @apiSuccess {object[] } Object Retorna um objeto com todos os valores
+ * 
+ * @apiError {boolean}type  false caso ocorra um erro.
+ * @apiError {string} data  Mensagem de erro.
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *   {"type": true,"Products": {"id":"1","name":"Feijão","value":"4.80","category":"Grãos"},{"id":"2","name":"Arroz","value":"5.80","category":"Grãos"}}
+ * @apiErrorExample {json} Error-Response:
+ *      
+ *     {"type": false,"data": "error"}
+ * 
+ * @apiSampleRequest http://api.lista-compras.com/products/not-have-cart/shoppinglist 
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
+ * 
+ */
+    public function getAllProductsNotHaveCart($shoppinglist){
         $sql = "SELECT p.id, p.description,p.price,c.description as category
         FROM products p
         JOIN category c ON c.id = p.category
         WHERE p.id NOT IN (SELECT ca.products FROM cart ca
-                         			WHERE p.id = ca.products ) 
+                         			WHERE p.id = ca.products AND ca.shoppinglist  = :shoppinglist ) 
         ORDER BY p.description DESC";
         try {
             $db = getConnection();
-            $stmt = $db->query($sql);
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":shoppinglist", $shoppinglist);
+            $stmt->execute();
             $products = $stmt->fetchAll(PDO::FETCH_OBJ);
             $db = null;
             echo '{"type":true, "products":' . json_encode($products) . '}';

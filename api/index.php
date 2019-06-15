@@ -72,7 +72,7 @@ $app->put('/products/:id', array('Products','updateProducts'));
 $app->delete('/products/:id', array('Products','deleteProducts'));
 $app->get('/products/:id', array('Products','getOneProducts'));
 $app->get('/products', array('Products','getAllProducts'));
-$app->get('/products/not-have-cart/shoppinglist', array('Products','getAllProductsNotHaveCart'));
+$app->get('/products/not-have-cart/shoppinglist/:shoppinglist', array('Products','getAllProductsNotHaveCart'));
 
 //Report
 $app->get('/report/most-purchased-products', array('Report','getMostPurchasedProducts'));

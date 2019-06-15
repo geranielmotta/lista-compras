@@ -26,7 +26,7 @@ class Cart {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras/api/Cart
+ * @apiSampleRequest off
  * 
  */
     public function addProductsInCart() {
@@ -98,7 +98,7 @@ public function updateCart($products) {
  * @apiVersion 1.0.0
  * @apiName deleteProductsInCart
  * @apiGroup Cart
- * @apiPermission admin
+ * @apiPermission root admin user
  *
  * @apiDescription Esta função deleta um registro
  * 
@@ -149,8 +149,8 @@ public function updateCart($products) {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/Cart  
- * @apiHeader {String} [Authorization=bearer f7a18c7871d160d4202b1878c73eefc9]
+ * @apiSampleRequest http://api.lista-compras.com/cart  
+ * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllCartOfShoppingList($shoppinglist) {
