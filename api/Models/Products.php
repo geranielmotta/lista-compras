@@ -21,7 +21,7 @@ class Products {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"Products": {"id":"1","description":"Feijão"}}
+ *   {"type": true,"Products": {"id":"1","description":"Feijão","price":"4.00","category":"1"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}

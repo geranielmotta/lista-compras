@@ -55,20 +55,19 @@ class Cart {
  * @apiGroup Cart
  * @apiPermission Root
  *
- * @apiDescription Esta função atualiza um registro
+ * @apiDescription Esta função atualiza a quantidade de produtos selecionados pelo usuário
  * 
- * @apiParam {string} name Nome da categoria
- * @apiParam {int} id Id a ser atualizado
- * 
+ * @apiParam {int} products Id do produto no carrinho
+ * @apiParam {int} shoppinglist Id da lista no carrinho
  *
  * @apiSuccess {boolean } type  Retorna verdadeiro se atualizou
- * @apiSuccess {object[] } Cart Retorna um objeto com os valores atualizados
+ * @apiSuccess {object[] } Cart Retorna um objeto com a quantidade atualizada
  * 
  * @apiError {boolean}type  false caso ocorra um erro.
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"Cart": {"id":"1","name":"Grãos"}}
+ *   {"type": true,"Cart": {"id":"1","amount":"2"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -95,9 +94,9 @@ public function updateCart($products) {
     }
 }   
 /**
- * @api {DELETE} /cart/:id deleteCart
+ * @api {DELETE} /cart/:id deleteProductsInCart
  * @apiVersion 1.0.0
- * @apiName deleteCart
+ * @apiName deleteProductsInCart
  * @apiGroup Cart
  * @apiPermission admin
  *

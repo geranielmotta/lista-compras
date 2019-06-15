@@ -237,10 +237,10 @@ define({ "api": [
   },
   {
     "type": "DELETE",
-    "url": "/List/:id",
-    "title": "deleteCart",
+    "url": "/cart/:id",
+    "title": "deleteProductsInCart",
     "version": "1.0.0",
-    "name": "deleteCart",
+    "name": "deleteProductsInCart",
     "group": "Cart",
     "permission": [
       {
@@ -381,92 +381,9 @@ define({ "api": [
     "groupTitle": "Cart"
   },
   {
-    "type": "GET",
-    "url": "/List/:id",
-    "title": "getOneCart",
-    "version": "1.0.0",
-    "name": "getOneCart",
-    "group": "Cart",
-    "permission": [
-      {
-        "name": "none"
-      }
-    ],
-    "description": "<p>Esta função seleciona um registro</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "id",
-            "description": "<p>Id a ser selecionado</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "boolean",
-            "optional": false,
-            "field": "type",
-            "description": "<p>Retorna verdadeiro se encontrou</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "object[]",
-            "optional": false,
-            "field": "object",
-            "description": "<p>Retorna um objeto com os valores</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\"type\": true,\"Cart\": {\"id\":\"1\",\"spending\":\"200\",\"amount\":\"3\",\"shoppinglist\":\"1\",\"products\":\"20/05/2019\"}}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "boolean",
-            "optional": false,
-            "field": "type",
-            "description": "<p>false caso ocorra um erro.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "string",
-            "optional": false,
-            "field": "data",
-            "description": "<p>Mensagem de erro.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " \n{\"type\": false,\"data\": \"error\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "api/Models/Cart.php",
-    "groupTitle": "Cart"
-  },
-  {
     "type": "POST",
-    "url": "/List",
-    "title": "newCart",
+    "url": "/cart/addproducts",
+    "title": "addCart",
     "version": "1.0.0",
     "name": "newCart",
     "group": "Cart",
@@ -555,6 +472,96 @@ define({ "api": [
         "url": "http://api.lista-compras/api/Cart"
       }
     ],
+    "filename": "api/Models/Cart.php",
+    "groupTitle": "Cart"
+  },
+  {
+    "type": "PUT",
+    "url": "/cart/producer/:id",
+    "title": "updateCart",
+    "version": "1.0.0",
+    "name": "updateCart",
+    "group": "Cart",
+    "permission": [
+      {
+        "name": "Root"
+      }
+    ],
+    "description": "<p>Esta função atualiza a quantidade de produtos selecionados pelo usuário</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "products",
+            "description": "<p>Id do produto no carrinho</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "shoppinglist",
+            "description": "<p>Id da lista no carrinho</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se atualizou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "Cart",
+            "description": "<p>Retorna um objeto com a quantidade atualizada</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"Cart\": {\"id\":\"1\",\"amount\":\"2\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
     "filename": "api/Models/Cart.php",
     "groupTitle": "Cart"
   },
@@ -1344,7 +1351,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\"type\": true,\"Products\": {\"id\":\"1\",\"name\":\"Feijão\"}}",
+          "content": "{\"type\": true,\"Products\": {\"id\":\"1\",\"description\":\"Feijão\",\"price\":\"4.00\",\"category\":\"1\"}}",
           "type": "json"
         }
       ]
@@ -1475,6 +1482,165 @@ define({ "api": [
     "groupTitle": "Products"
   },
   {
+    "type": "GET",
+    "url": "/report/most-purchased-products",
+    "title": "getMostPurchasedProducts",
+    "version": "1.0.0",
+    "name": "getMostPurchasedProducts",
+    "group": "Report",
+    "permission": [
+      {
+        "name": "root"
+      }
+    ],
+    "description": "<p>Esta função busca os produtos mais selecionados pelos usuários do sistema</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se encontrou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "Report",
+            "description": "<p>Retorna um objeto com os valores</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"report\": {\"id\":\"1\",\"products\":\"Arroz\",\"price\":\"10.50\",\"category\":\"Grãos\",\"amount\":\"200\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/Models/Report.php",
+    "groupTitle": "Report"
+  },
+  {
+    "type": "GET",
+    "url": "/report/users-who-spent-more",
+    "title": "getUsersWhoSpentMore",
+    "version": "1.0.0",
+    "name": "getUsersWhoSpentMore",
+    "group": "Report",
+    "permission": [
+      {
+        "name": "root"
+      }
+    ],
+    "description": "<p>Esta função busca os maiores gastos em produtos por usuários</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se encontrou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "Report",
+            "description": "<p>Retorna um objeto com todos os valores</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"Report\": {\"id\":\"1\",\"username\":\"geranielmotta\",\"date\":\"01/06/2019 22:06\",\"email\":\"geraniel.motta@gmail.com\",\"spending \":\"200.60\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "sampleRequest": [
+      {
+        "url": "http://api.lista-compras.com/Report"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": true,
+            "field": "Authorization",
+            "defaultValue": "bearer",
+            "description": "<p>f7a18c7871d160d4202b1878c73eefc9]</p>"
+          }
+        ]
+      }
+    },
+    "filename": "api/Models/Report.php",
+    "groupTitle": "Report"
+  },
+  {
     "type": "DELETE",
     "url": "/shoppinglist/:id",
     "title": "deleteShoppingList",
@@ -1532,16 +1698,29 @@ define({ "api": [
   },
   {
     "type": "GET",
-    "url": "/shoppinglist/",
-    "title": "getAllShoppingList",
+    "url": "/shoppinglist/user/:user",
+    "title": "getAllShoppingListOfUser",
     "version": "1.0.0",
-    "name": "getAllShoppingList",
+    "name": "getAllShoppingListOfUser",
     "group": "ShoppingList",
     "permission": [
       {
         "name": "none"
       }
     ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "user",
+            "description": "<p>id do usuário a ser selecionado</p>"
+          }
+        ]
+      }
+    },
     "description": "<p>Esta função seleciona todos os registro</p>",
     "success": {
       "fields": {
@@ -1757,7 +1936,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\"type\": true,\"shoppingList\": {\"date\":\"20/05/2019\",\"user\":\"1\"}}",
+          "content": "{\"type\": true,\"shoppingList\": {\"user\":\"1\"}}",
           "type": "json"
         }
       ]
@@ -2272,5 +2451,95 @@ define({ "api": [
     },
     "filename": "api/Models/User.php",
     "groupTitle": "User"
+  },
+  {
+    "type": "PUT",
+    "url": "/shoppingList/:id",
+    "title": "updateshoppingList",
+    "version": "1.0.0",
+    "name": "updateshoppingList",
+    "group": "shoppingList",
+    "permission": [
+      {
+        "name": "Root Admin"
+      }
+    ],
+    "description": "<p>Esta função atualiza um registro</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nome da categoria</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id a ser atualizado</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se atualizou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "shoppingList",
+            "description": "<p>Retorna um objeto com os valores atualizados</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"shoppingList\": {\"id\":\"1\",\"spending\":\"200\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/Models/ShoppingList.php",
+    "groupTitle": "shoppingList"
   }
 ] });

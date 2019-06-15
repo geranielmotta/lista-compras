@@ -2,7 +2,7 @@
 
 class Report {
 /**
- * @api {GET} /report/most-purchased-products Report
+ * @api {GET} /report/most-purchased-products getMostPurchasedProducts
  * @apiVersion 1.0.0
  * @apiName getMostPurchasedProducts
  * @apiGroup Report

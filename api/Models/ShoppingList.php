@@ -21,7 +21,7 @@ class ShoppingList {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"shoppingList": {"date":"20/05/2019","user":"1"}}
+ *   {"type": true,"shoppingList": {"user":"1"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -69,7 +69,7 @@ class ShoppingList {
  * @apiError {string} data  Mensagem de erro.
  * 
  * @apiSuccessExample {json} Success-Response:
- *   {"type": true,"shoppingList": {"id":"1","name":"Feijão","value":"2.5","category":"1"}}
+ *   {"type": true,"shoppingList": {"id":"1","spending":"200"}}
  * @apiErrorExample {json} Error-Response:
  *      
  *     {"type": false,"data": "error"}
@@ -156,7 +156,7 @@ public function updateshoppingList($id) {
  * 
  */
     public function getOneShoppingList($id) {
-        $sql = "SELECT ROUND(SUM(p.value), 2) as spending, COUNT(c.products) AS amount, l.user, l.date
+        $sql = "SELECT l.spending, COUNT(c.products) AS amount, l.user, l.date
                     FROM shoppinglist l 
                         INNER JOIN cart c ON c.shoppinglist = l.id
                         INNER JOIN products p ON p.id = c.products
