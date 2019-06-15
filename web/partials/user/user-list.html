@@ -36,7 +36,7 @@
                     <tr ng-repeat=" user in users| filter:filter ">
                         <td>#</td>
                         <td>{{user.name}}</td>
-                        <td>{{user.phone }}</td>
+                        <td>{{user.phone | tel }}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.access_levels}}</td>
                         <td> <button ng-if="user.access_levels != 'Root'" class="btn btn-primary btn-mini" ng-click="updateUser({id: user.id})"><i class="fa fa-edit"></i></button> 

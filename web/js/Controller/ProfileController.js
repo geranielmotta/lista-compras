@@ -60,7 +60,7 @@ angular.module('profileControllers', [])
                         });
                     }
                 } else {
-                    User.update($scope.user.id, $scope.user, function () {
+                    User.update($stateParams.id, $scope.user, function () {
                         ngDialog.open({
                             template: 'partials/notification/update/update-confirmed.html',
                             className: 'ngdialog-theme-default'

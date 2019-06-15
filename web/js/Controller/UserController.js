@@ -157,7 +157,6 @@ angular.module('userControllers', [])
                     $scope.user.access_levels = valueAccess;
                 });
             }
-
         });
 
         $scope.updateUser = function () {

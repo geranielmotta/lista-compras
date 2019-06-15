@@ -18,3 +18,15 @@ angular.module('filter',[])
             return 'R$ ' + s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
         }
 })
+.filter('tel', function () {
+    return function (input) {
+      var str = input + '';
+      str = str.replace(/\D/g, '');
+      if (str.length === 11) {
+        str = str.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+      } else {
+        str = str.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+      }
+      return str;
+    };
+  });
