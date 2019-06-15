@@ -1,7 +1,6 @@
 <?php
 
 class AccessLevels{
-
 /**
  * @api {GET} /accesslevels/:id getOneAccessLevels
  * @apiVersion 1.0.0
@@ -29,7 +28,6 @@ class AccessLevels{
  * @apiSampleRequest off
  * 
  */    
-    
     public function getOneAccessLevels($id) {
         $sql = "SELECT id, description, code FROM access_levels WHERE id=:id";
         try {
@@ -83,7 +81,6 @@ class AccessLevels{
             echo '{"type":false,"data":"'.$e->getMessage().'"}';
         }
     }
-    
 /**
  * @api {GET} /accesslevelsnotroot getAllAccessLevelsNotRoot
  * @apiVersion 1.0.0
@@ -109,8 +106,7 @@ class AccessLevels{
  * 
  * @apiSampleRequest off
  * 
- */ 
-    
+ */  
     public function getAllAccessLevelsNotRoot() {
         $sql = "SELECT id,description,code FROM access_levels WHERE id <> 1";
         try {
@@ -123,7 +119,5 @@ class AccessLevels{
             echo '{"type":false,"data":"'.$e->getMessage().'"}';
         }
     }
-    
 }
-
 ?>

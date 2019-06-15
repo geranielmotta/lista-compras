@@ -360,7 +360,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://api.lista-compras.com/cart"
+        "url": "http://api.lista-compras.com/cart/shoppinglist/21"
       }
     ],
     "header": {
@@ -369,10 +369,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -694,10 +694,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -1195,7 +1195,7 @@ define({ "api": [
             "optional": true,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b]</p>"
           }
         ]
       }
@@ -1272,7 +1272,7 @@ define({ "api": [
     },
     "sampleRequest": [
       {
-        "url": "http://api.lista-compras.com/products/not-have-cart/shoppinglist"
+        "url": "http://api.lista-compras.com/products/not-have-cart/shoppinglist/21"
       }
     ],
     "header": {
@@ -1281,10 +1281,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -1633,10 +1633,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -1722,10 +1722,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -1880,10 +1880,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -2070,6 +2070,96 @@ define({ "api": [
     "groupTitle": "ShoppingList"
   },
   {
+    "type": "PUT",
+    "url": "/shoppingList/:id",
+    "title": "updateshoppingList",
+    "version": "1.0.0",
+    "name": "updateshoppingList",
+    "group": "ShoppingList",
+    "permission": [
+      {
+        "name": "Root Admin"
+      }
+    ],
+    "description": "<p>Esta função atualiza um registro</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "string",
+            "optional": false,
+            "field": "name",
+            "description": "<p>Nome da categoria</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id a ser atualizado</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>Retorna verdadeiro se atualizou</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "object[]",
+            "optional": false,
+            "field": "shoppingList",
+            "description": "<p>Retorna um objeto com os valores atualizados</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\"type\": true,\"shoppingList\": {\"id\":\"1\",\"spending\":\"200\"}}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "boolean",
+            "optional": false,
+            "field": "type",
+            "description": "<p>false caso ocorra um erro.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "string",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Mensagem de erro.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": " \n{\"type\": false,\"data\": \"error\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "api/Models/ShoppingList.php",
+    "groupTitle": "ShoppingList"
+  },
+  {
     "type": "DELETE",
     "url": "/user/:id",
     "title": "deleteUser",
@@ -2203,10 +2293,10 @@ define({ "api": [
           {
             "group": "Header",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "Authorization",
             "defaultValue": "bearer",
-            "description": "<p>ad985e3af071adc3dbccb5703ecf164b]</p>"
+            "description": "<p>bearer ad985e3af071adc3dbccb5703ecf164b</p>"
           }
         ]
       }
@@ -2544,95 +2634,5 @@ define({ "api": [
     },
     "filename": "api/Models/User.php",
     "groupTitle": "User"
-  },
-  {
-    "type": "PUT",
-    "url": "/shoppingList/:id",
-    "title": "updateshoppingList",
-    "version": "1.0.0",
-    "name": "updateshoppingList",
-    "group": "shoppingList",
-    "permission": [
-      {
-        "name": "Root Admin"
-      }
-    ],
-    "description": "<p>Esta função atualiza um registro</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "string",
-            "optional": false,
-            "field": "name",
-            "description": "<p>Nome da categoria</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "id",
-            "description": "<p>Id a ser atualizado</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "boolean",
-            "optional": false,
-            "field": "type",
-            "description": "<p>Retorna verdadeiro se atualizou</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "object[]",
-            "optional": false,
-            "field": "shoppingList",
-            "description": "<p>Retorna um objeto com os valores atualizados</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "{\"type\": true,\"shoppingList\": {\"id\":\"1\",\"spending\":\"200\"}}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "boolean",
-            "optional": false,
-            "field": "type",
-            "description": "<p>false caso ocorra um erro.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "string",
-            "optional": false,
-            "field": "data",
-            "description": "<p>Mensagem de erro.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": " \n{\"type\": false,\"data\": \"error\"}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "api/Models/ShoppingList.php",
-    "groupTitle": "shoppingList"
   }
 ] });

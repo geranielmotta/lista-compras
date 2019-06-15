@@ -197,7 +197,7 @@ public function updateProducts($id) {
  *     {"type": false,"data": "error"}
  * 
  * @apiSampleRequest http://api.lista-compras.com/products  
- * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
+ * @apiHeader {String} [Authorization=bearer bearer ad985e3af071adc3dbccb5703ecf164b]
  * 
  */
     public function getAllProducts() {
@@ -236,8 +236,8 @@ public function updateProducts($id) {
  *      
  *     {"type": false,"data": "error"}
  * 
- * @apiSampleRequest http://api.lista-compras.com/products/not-have-cart/shoppinglist 
- * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
+ * @apiSampleRequest http://api.lista-compras.com/products/not-have-cart/shoppinglist/21 
+ * @apiHeader {String}  Authorization=bearer  bearer ad985e3af071adc3dbccb5703ecf164b 
  * 
  */
     public function getAllProductsNotHaveCart($shoppinglist){

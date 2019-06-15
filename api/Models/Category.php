@@ -192,7 +192,7 @@ public function updateCategory($id) {
  *     {"type": false,"data": "error"}
  * 
  * @apiSampleRequest http://api.lista-compras.com/category
- * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
+ * @apiHeader {String}  Authorization=bearer bearer ad985e3af071adc3dbccb5703ecf164b 
  * 
  */
     public function getAllCategory() {

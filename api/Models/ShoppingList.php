@@ -53,7 +53,7 @@ class ShoppingList {
  * @api {PUT} /shoppingList/:id updateshoppingList
  * @apiVersion 1.0.0
  * @apiName updateshoppingList
- * @apiGroup shoppingList
+ * @apiGroup ShoppingList
  * @apiPermission Root Admin
  *
  * @apiDescription Esta função atualiza um registro
@@ -198,7 +198,7 @@ public function updateshoppingList($id) {
  *     {"type": false,"data": "error"}
  * 
  * @apiSampleRequest http://api.lista-compras.com/shoppinglist/user/1  
- * @apiHeader {String} [Authorization=bearer ad985e3af071adc3dbccb5703ecf164b]
+ * @apiHeader {String}  Authorization=bearer bearer ad985e3af071adc3dbccb5703ecf164b 
  * 
  */
     public function getAllShoppingListOfUser($user) {
