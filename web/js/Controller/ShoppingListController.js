@@ -85,7 +85,7 @@ angular.module('shoppingListControllers', [])
 
 .controller('ShoppingListSelectProductsController',function($scope, $state, $stateParams,Cart,Products,ShoppingList,ngDialog){
     $scope.cart = {};
-    Products.getAllProductsNotHaveCart(function(res){
+    Products.getAllProductsNotHaveCart($stateParams.id,function(res){
         $scope.products = res.products;
     },function(res){
         ngDialog.open({

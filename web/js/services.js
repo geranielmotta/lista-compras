@@ -114,8 +114,8 @@ angular.module('services',[])
         getAllProducts: function(success, error) {
             $http.get(baseUrl + '/products').success(success).error(error);
         },
-        getAllProductsNotHaveCart: function(success, error) {
-            $http.get(baseUrl + '/products/not-have-cart/shoppinglist').success(success).error(error);
+        getAllProductsNotHaveCart: function(id,success, error) {
+            $http.get(baseUrl + '/products/not-have-cart/shoppinglist/'+id).success(success).error(error);
         },
         save: function(object,success, error) {
             $http.post(baseUrl + '/products',object).success(success).error(error);
