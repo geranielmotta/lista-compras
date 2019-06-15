@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30-Maio-2019 às 23:15
+-- Generation Time: 15-Jun-2019 às 22:43
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.4
 
@@ -41,7 +41,7 @@ CREATE TABLE `access_levels` (
 INSERT INTO `access_levels` (`id`, `description`, `code`) VALUES
 (1, 'Root', 1000),
 (2, 'Administrador', 100),
-(4, 'Usuário', 1);
+(4, 'Usuário', 10);
 
 -- --------------------------------------------------------
 
@@ -60,11 +60,17 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`shoppinglist`, `products`, `amount`) VALUES
-(1, 1, 2),
-(1, 6, 2),
-(1, 7, 3),
-(1, 14, 4),
-(2, 27, 1);
+(20, 29, 3),
+(21, 2, 2),
+(21, 11, 1),
+(21, 13, 2),
+(21, 14, 1),
+(21, 19, 2),
+(21, 20, 10),
+(21, 26, 1),
+(21, 29, 1),
+(24, 11, 1),
+(24, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +88,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `description`) VALUES
-(1, 'Graos'),
+(1, 'Graos AL'),
 (2, 'Biscoitos'),
 (3, 'Bebidas'),
 (4, 'Frutas'),
@@ -95,9 +101,10 @@ INSERT INTO `category` (`id`, `description`) VALUES
 (11, 'Ovos'),
 (12, 'Farinhas'),
 (20, 'aawqqqqq'),
-(21, 'teste 1'),
+(21, 'teste 222'),
 (22, 'editado'),
-(23, 'editado de boas');
+(23, 'editado de boas'),
+(24, 'Graos');
 
 -- --------------------------------------------------------
 
@@ -143,7 +150,14 @@ INSERT INTO `products` (`id`, `description`, `price`, `category`) VALUES
 (24, 'Pão Integral', 2.75, 5),
 (25, 'Carne de Soja', 18.5, 6),
 (26, 'Presunto', 7.55, 6),
-(27, 'teste editado', 22, 6);
+(28, 'aaa', 22, 23),
+(29, 'teste de vir a', 5.63, 22),
+(31, '1aaa', 12, 1),
+(32, '2aaa', 22.44, 12),
+(33, 'meu produto', 200.6, 5),
+(34, 'meu prod', 88, 12),
+(35, 'meu prod 2', 55.55, 10),
+(36, 'Feijão bom', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -153,8 +167,8 @@ INSERT INTO `products` (`id`, `description`, `price`, `category`) VALUES
 
 CREATE TABLE `shoppinglist` (
   `id` int(11) NOT NULL,
-  `date` varchar(45) DEFAULT NULL,
-  `spending` float NOT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `spending` float NOT NULL DEFAULT '0',
   `user` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -163,8 +177,11 @@ CREATE TABLE `shoppinglist` (
 --
 
 INSERT INTO `shoppinglist` (`id`, `date`, `spending`, `user`) VALUES
-(1, '2019-05-25 03:00:00', 88.55, 1),
-(2, NULL, 0, 2);
+(12, '2019-06-01 23:34:00', 22, 22),
+(20, '2019-06-02 00:38:14', 15, 23),
+(21, '2019-06-15 20:09:52', 245.36, 1),
+(23, '2019-06-06 20:59:03', 0, 25),
+(24, '2019-06-15 20:11:16', 12.2, 26);
 
 -- --------------------------------------------------------
 
@@ -174,13 +191,13 @@ INSERT INTO `shoppinglist` (`id`, `date`, `spending`, `user`) VALUES
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(45) NOT NULL,
+  `username` varchar(45) DEFAULT NULL,
   `password` varchar(45) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `token` varchar(45) DEFAULT NULL,
-  `access_levels` int(11) NOT NULL
+  `access_levels` int(11) DEFAULT '4'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -188,8 +205,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `name`, `phone`, `email`, `token`, `access_levels`) VALUES
-(1, 'geranielmotta', '698dc19d489c4e4db73e28a713eab07b', 'Geraniel Motta', '55541554448', 'geranielmotta@gmail.com', 'c7ff30c2cfe6abcd1c011992eefa946a', 1),
-(2, 'teste.user', '698dc19d489c4e4db73e28a713eab07b', 'usuário teste', '121545444', 'teste@teste.com', 'ad985e3af071adc3dbccb5703ecf164b', 4);
+(1, 'geranielmotta', '698dc19d489c4e4db73e28a713eab07b', 'Geraniel Motta', '(55) 54155-4448', 'geranielmotta@gmail.com', '66c8bfcca5058f11be29488ac53ab5ad', 1),
+(2, 'SUPER ROOT', '698dc19d489c4e4db73e28a713eab07b', 'SUPER ROOT', '12154544455', 'root@super.com', 'ad985e3af071adc3dbccb5703ecf164b', 4),
+(21, 'usuário 32', '698dc19d489c4e4db73e28a713eab07b', 'user', '11111111111', 'user@user.com', '60731efce828749866386fa5cd5fd0aa', 4),
+(22, 'geranielmotta', '698dc19d489c4e4db73e28a713eab07b', 'user 2', '11111111111', 'user2@user2.com', '939652dadad7e15982650745e0fcd217', 4),
+(23, 'teste', '698dc19d489c4e4db73e28a713eab07b', 'usuário teste 02', '22222222222', 'user02@user.com', 'cce0676c08fd67cdc27dce5de1c0a07b', 4),
+(24, 'teste 22', '698dc19d489c4e4db73e28a713eab07b', 'teste aaa', '45454545454', 'teste@teste.com', NULL, 4),
+(25, NULL, '698dc19d489c4e4db73e28a713eab07b', 'geraniel', NULL, 'geraniel@gmail.com', 'e8cdc08a2ade0a15f42f8b9fc0aa85a4', 4),
+(26, NULL, '698dc19d489c4e4db73e28a713eab07b', 'novo', NULL, 'novo@novo.com', '7c7b57a697e4e7a8d208362fe071470d', 4);
 
 --
 -- Indexes for dumped tables
@@ -249,25 +272,25 @@ ALTER TABLE `access_levels`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `shoppinglist`
 --
 ALTER TABLE `shoppinglist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
