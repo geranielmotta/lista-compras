@@ -1,4 +1,4 @@
-# lista-compras
+# Web Lista
 Api para trabalho de engenharia de software
 
 <h3>Ambiente de trabalho:</h3>
